@@ -1,0 +1,21 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Node (if added in the future)
+node_modules/
+.npm/
+package-lock.json
+
+# Vercel
+.vercel/

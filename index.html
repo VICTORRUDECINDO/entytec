@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entytec | Video Game Development Studio</title>
+  <meta name="description"
+    content="Estudio de desarrollo de videojuegos en República Dominicana con más de 10 años de experiencia. Creamos experiencias que merecen ser jugadas.">
+  <meta name="keywords"
+    content="videojuegos, game dev, Entytec, Antrio, Unity 3D, República Dominicana, outsourcing, desarrollo de videojuegos">
+  <meta property="og:title" content="Entytec | Game Development Studio">
+  <meta property="og:description"
+    content="Creamos experiencias que merecen ser jugadas. Títulos como Antrio, The Alchemist Apprentice y Yarari.">
+  <meta property="og:image" content="Antrio/1.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="Logo.imagen.jpg">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+
+  <!-- ==========================================
+       01. HEADER / STICKY NAVIGATION
+       ========================================== -->
+  <header class="site-header" id="header">
+    <div class="container header-container">
+      <a href="#inicio" class="brand-logo" aria-label="Entytec Inicio">
+        <img src="entytec-logo-horizontal.png" alt="Entytec Logo" id="header-logo">
+      </a>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#inicio" class="nav-link active">Inicio</a></li>
+          <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+          <li><a href="#servicios" class="nav-link">Servicios</a></li>
+          <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+          <li><a href="#contacto" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#contacto" class="btn btn-primary btn-sm">Hablemos</a>
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================
+         03. HERO / INICIO (ROCKSTAR GAMES STYLE)
+         ========================================== -->
+    <section class="hero-rockstar" id="inicio">
+      <!-- Full-bleed Slider Container -->
+      <div class="hero-slider-track" id="hero-slider-track">
+
+        <!-- Slide 1: Antrio -->
+        <div class="hero-slide active" data-slide="0">
+          <div class="hero-bg-wrapper">
+            <img src="Antrio/1.jpg" alt="Antrio Wallpaper" class="hero-bg-img">
+            <div class="hero-gradient-overlay"></div>
+          </div>
+          <div class="container hero-slide-content">
+            <div class="hero-badge-row">
+              <span class="badge badge-orange">PROYECTO DESTACADO</span>
+              <span class="badge badge-steam">Disponible en Steam</span>
+            </div>
+            <h1 class="hero-main-title">ANTRIO</h1>
+            <p class="hero-main-desc">
+              Un frenético 2D action-platformer de máxima precisión inspirado en la era dorada de los 8-bits. Desafía
+              niveles implacables y jefes memorables.
+            </p>
+            <div class="hero-actions-row">
+              <button class="btn btn-primary btn-lg" onclick="openProjectModal('antrio')">
+                <span>Ver proyecto</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <a href="#proyectos" class="btn btn-glass btn-lg">
+                <span>Todos los proyectos</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 2: The Alchemist Apprentice -->
+        <div class="hero-slide" data-slide="1">
+          <div class="hero-bg-wrapper">
+            <img src="Otros proyectos/alchemist_1-768x424.png" alt="The Alchemist Apprentice Wallpaper"
+              class="hero-bg-img">
+            <div class="hero-gradient-overlay"></div>
+          </div>
+          <div class="container hero-slide-content">
+            <div class="hero-badge-row">
+              <span class="badge badge-amber">EN PRODUCCIÓN</span>
+              <span class="badge badge-orange">PC · Mobile</span>
+            </div>
+            <h1 class="hero-main-title">The Alchemist Apprentice</h1>
+            <p class="hero-main-desc">
+              Aventura de puzles mágicos y combinaciones alquímicas dinámicas. Desentraña los enigmas de una academia
+              mística y domina los elementos arcanos.
+            </p>
+            <div class="hero-actions-row">
+              <button class="btn btn-primary btn-lg" onclick="openProjectModal('alchemist')">
+                <span>Ver proyecto</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <a href="#proyectos" class="btn btn-glass btn-lg">
+                <span>Todos los proyectos</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Yarari: The Sacred Valley -->
+        <div class="hero-slide" data-slide="2">
+          <div class="hero-bg-wrapper">
+            <img src="Otros proyectos/yarari1-768x576.jpg" alt="Yarari The Sacred Valley Wallpaper" class="hero-bg-img">
+            <div class="hero-gradient-overlay"></div>
+          </div>
+          <div class="container hero-slide-content">
+            <div class="hero-badge-row">
+              <span class="badge badge-emerald">EN DESARROLLO</span>
+              <span class="badge badge-orange">PC · Consolas</span>
+            </div>
+            <h1 class="hero-main-title">Yarari: The Sacred Valley</h1>
+            <p class="hero-main-desc">
+              Acción y exploración en un mundo inspirado en la mitología y folclore caribeño. Rescata los espíritus
+              ancestrales y restaura la armonía natural.
+            </p>
+            <div class="hero-actions-row">
+              <button class="btn btn-primary btn-lg" onclick="openProjectModal('yarari')">
+                <span>Ver proyecto</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <a href="#proyectos" class="btn btn-glass btn-lg">
+                <span>Todos los proyectos</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Rockstar Style Drag Hint & Floating Bottom Controls -->
+      <div class="hero-bottom-bar container">
+        <div class="hero-playback-ctrls">
+          <button class="hero-play-pause-btn" id="hero-play-pause" aria-label="Pausar o reanudar slider">
+            <svg id="pause-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16" />
+              <rect x="14" y="4" width="4" height="16" />
+            </svg>
+            <svg id="play-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+              <polygon points="5 3 19 12 5 21 5 3" />
+            </svg>
+          </button>
+
+          <div class="hero-progress-dots" id="hero-progress-dots">
+            <div class="progress-pill active" onclick="goToSlide(0)"><span class="progress-fill"></span></div>
+            <div class="progress-pill" onclick="goToSlide(1)"><span class="progress-fill"></span></div>
+            <div class="progress-pill" onclick="goToSlide(2)"><span class="progress-fill"></span></div>
+          </div>
+        </div>
+
+        <div class="hero-nav-arrows">
+          <button class="hero-arrow-btn" id="hero-prev" aria-label="Juego anterior">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <button class="hero-arrow-btn" id="hero-next" aria-label="Siguiente juego">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Drag Indicator / Hint -->
+      <div class="hero-drag-hint">
+        <span>Arriba o desliza con el cursor</span>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         04. ABOUT US / NOSOTROS
+         ========================================== -->
+    <section class="section section-alt" id="nosotros">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-text">
+            <span class="section-label">Sobre Nosotros</span>
+            <h2>Estudio de desarrollo basado en República Dominicana</h2>
+            <p>
+              En <strong>ENTYTEC</strong> somos un equipo multidisciplinario de desarrolladores, artistas, diseñadores
+              de niveles y compositores apasionados por el noveno arte.
+            </p>
+            <p>
+              Con más de una década creando experiencias lúdicas, transformamos ideas en títulos dinámicos con fuerte
+              identidad visual, mecánicas pulidas y alto valor de rejugabilidad. Trabajamos tanto en propiedades
+              intelectuales propias como en servicios integrales de desarrollo para estudios y publishers
+              internacionales.
+            </p>
+            <a href="#contacto" class="btn btn-secondary btn-sm" style="margin-top: 0.5rem;">Conoce a nuestro equipo</a>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-value">+10</div>
+              <div class="metric-label">Años de experiencia en el sector</div>
+            </div>
+            <div class="metric-card text-metric">
+              <div class="metric-value">PC · Mobile · Web</div>
+              <div class="metric-label">Plataformas de desarrollo</div>
+            </div>
+            <div class="metric-card text-metric">
+              <div class="metric-value">Unity 3D</div>
+              <div class="metric-label">Tecnología & Motor principal</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value">15+</div>
+              <div class="metric-label">Años de experiencia acumulada del equipo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         05. SERVICES / SERVICIOS
+         ========================================== -->
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Nuestros Servicios</span>
+          <h2 class="section-title">Soluciones integrales de desarrollo</h2>
+          <p class="section-subtitle">
+            Desde la concepción creativa hasta la optimización técnica final, ofrecemos capacidades de ingeniería y arte
+            para dar vida a proyectos ambiciosos.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <!-- Servicio 1 -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <rect x="2" y="6" width="20" height="12" rx="2" />
+                <path d="M6 12h4m-2-2v4m9-2h.01M17 10h.01M17 14h.01M15 12h.01" />
+              </svg>
+            </div>
+            <h3>Desarrollo de Videojuegos</h3>
+            <p>Creación y desarrollo completo de experiencias interactivas desde el concepto inicial hasta la
+              publicación en tiendas digitales.</p>
+            <ul class="service-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Prototipado y Game Design</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Arte 2D/3D y Animación</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Programación C# & Unity 3D</li>
+            </ul>
+            <a href="#contacto" class="service-link" onclick="preselectIntent('game-dev')">
+              <span>Solicitar servicio</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Servicio 2 -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+            </div>
+            <h3>Outsourcing</h3>
+            <p>Apoyo técnico y artístico especializado para reforzar y acelerar la producción de equipos y estudios
+              externos.</p>
+            <ul class="service-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Integración y portabilidad</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Producción de assets y UI/UX</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Control de calidad & QA</li>
+            </ul>
+            <a href="#contacto" class="service-link" onclick="preselectIntent('outsourcing')">
+              <span>Proponer colaboración</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Servicio 3 -->
+          <div class="service-card">
+            <div class="service-icon-wrapper">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                <line x1="12" y1="17" x2="12.01" y2="17" />
+              </svg>
+            </div>
+            <h3>Consultoría</h3>
+            <p>Asesoría estratégica en arquitectura de software, optimización de pipelines, diseño de niveles y
+              monetización.</p>
+            <ul class="service-list">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Auditoría técnica de proyectos</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Optimización de rendimiento</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg> Asesoría para publicación</li>
+            </ul>
+            <a href="#contacto" class="service-link" onclick="preselectIntent('consulting')">
+              <span>Hablar con un consultor</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         06. LATEST PROJECT / ÚLTIMO PROYECTO (ANTRIO)
+         ========================================== -->
+    <section class="section section-alt" id="ultimo-proyecto">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Proyecto Destacado</span>
+          <h2 class="section-title">Nuestro último lanzamiento</h2>
+        </div>
+
+        <div class="latest-project-card">
+          <div class="latest-media">
+            <img id="latest-hero-view" src="Antrio/3.jpg" alt="Antrio Gameplay Preview" class="latest-main-img">
+            <div class="latest-gallery-thumbs">
+              <button class="thumb-btn active" onclick="switchLatestImage('Antrio/3.jpg', this)">
+                <img src="Antrio/3.jpg" alt="Screenshot 1">
+              </button>
+              <button class="thumb-btn" onclick="switchLatestImage('Antrio/2.jpg', this)">
+                <img src="Antrio/2.jpg" alt="Screenshot 2">
+              </button>
+              <button class="thumb-btn" onclick="switchLatestImage('Antrio/1.jpg', this)">
+                <img src="Antrio/1.jpg" alt="Screenshot 3">
+              </button>
+            </div>
+          </div>
+
+          <div class="latest-info">
+            <div class="latest-header">
+              <span class="badge badge-orange">LATEST PROJECT</span>
+              <h3 class="latest-title">ANTRIO</h3>
+              <span class="badge badge-steam">Disponible en Steam</span>
+            </div>
+
+            <p class="latest-desc">
+              Antrio is a 2D action-platformer inspired by classic games from the 8-bit era. Con una estética retro
+              pulida y controles de máxima precisión, ofrece un reto inolvidable para los amantes del género.
+            </p>
+
+            <div class="latest-features">
+              <div class="feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Acción y plataformas de alta precisión 2D</span>
+              </div>
+              <div class="feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Banda sonora original inspirada en la era 8-bit</span>
+              </div>
+              <div class="feature-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span>Desarrollado en Unity 3D para PC (Steam)</span>
+              </div>
+            </div>
+
+            <div class="latest-actions">
+              <button class="btn btn-primary" onclick="openProjectModal('antrio')">
+                <span>Jugar Demo</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+              <a href="https://store.steampowered.com" target="_blank" rel="noopener noreferrer" class="btn btn-steam">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12 0a12 12 0 0 0-12 12c0 5.4 3.5 10 8.4 11.5l1.6-4.8c-.2-.1-.4-.2-.6-.3a2.9 2.9 0 0 1-1.7-2.6 3 3 0 0 1 3-3c.4 0 .8.1 1.2.3l4.3-3.1C16.1 10 16 9.5 16 9a5 5 0 1 1 5 5c-.7 0-1.4-.2-2-.5l-3.3 4.6c.1.4.1.8.1 1.2a3.7 3.7 0 0 1-3.7 3.7c-1.3 0-2.5-.7-3.1-1.8L3.6 23.3A12 12 0 0 0 12 24a12 12 0 0 0 12-12A12 12 0 0 0 12 0z" />
+                </svg>
+                <span>Ver en Steam</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         07. OTHER WORKS / PORTFOLIO GRID
+         ========================================== -->
+    <section class="section" id="proyectos">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Portafolio</span>
+          <h2 class="section-title">Nuestros Videojuegos</h2>
+          <p class="section-subtitle">
+            Explora el catálogo de proyectos desarrollados y en producción de Entytec.
+          </p>
+
+          <!-- Filtros de categoría -->
+          <div class="portfolio-filters" id="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">Todos</button>
+            <button class="filter-btn" data-filter="Action / Platformer">Action / Platformer</button>
+            <button class="filter-btn" data-filter="Puzzle / Adventure">Puzzle / Adventure</button>
+            <button class="filter-btn" data-filter="Action / Adventure">Action / Adventure</button>
+          </div>
+        </div>
+
+        <div class="portfolio-grid" id="portfolio-grid">
+          <!-- Card 1: Antrio -->
+          <div class="portfolio-card" data-category="Action / Platformer">
+            <div class="portfolio-thumb-wrapper">
+              <img src="Antrio/3.jpg" alt="Antrio" class="portfolio-thumb-img">
+              <div class="portfolio-overlay">
+                <button class="btn btn-primary" onclick="openProjectModal('antrio')">
+                  <span>Ver proyecto</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <div class="portfolio-tags">
+                <span class="badge badge-orange">Action / Platformer</span>
+                <span class="badge badge-steam">Steam</span>
+              </div>
+              <h3 class="portfolio-title">Antrio</h3>
+              <p class="portfolio-tagline">2D action-platformer de ritmo rápido inspirado en los grandes clásicos de la
+                época de 8-bits.</p>
+              <div class="portfolio-meta">
+                <span>Plataforma: PC</span>
+                <span>Motor: Unity 3D</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: The Alchemist Apprentice -->
+          <div class="portfolio-card" data-category="Puzzle / Adventure">
+            <div class="portfolio-thumb-wrapper">
+              <img src="Otros proyectos/alchemist_1-768x424.png" alt="The Alchemist Apprentice"
+                class="portfolio-thumb-img">
+              <div class="portfolio-overlay">
+                <button class="btn btn-primary" onclick="openProjectModal('alchemist')">
+                  <span>Ver proyecto</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <div class="portfolio-tags">
+                <span class="badge badge-amber">Puzzle / Adventure</span>
+                <span class="badge badge-orange">PC · Mobile</span>
+              </div>
+              <h3 class="portfolio-title">The Alchemist Apprentice</h3>
+              <p class="portfolio-tagline">Desentraña misterios y crea pociones dinámicas en una aventura mágica llena
+                de acertijos.</p>
+              <div class="portfolio-meta">
+                <span>Plataforma: PC / Mobile</span>
+                <span>Motor: Unity 3D</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Yarari -->
+          <div class="portfolio-card" data-category="Action / Adventure">
+            <div class="portfolio-thumb-wrapper">
+              <img src="Otros proyectos/yarari1-768x576.jpg" alt="Yarari: The Sacred Valley"
+                class="portfolio-thumb-img">
+              <div class="portfolio-overlay">
+                <button class="btn btn-primary" onclick="openProjectModal('yarari')">
+                  <span>Ver proyecto</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="portfolio-content">
+              <div class="portfolio-tags">
+                <span class="badge badge-emerald">Action / Adventure</span>
+                <span class="badge badge-orange">En Desarrollo</span>
+              </div>
+              <h3 class="portfolio-title">Yarari: The Sacred Valley</h3>
+              <p class="portfolio-tagline">Explora la mitología caribeña ancestral, rescata a los espíritus de la fauna
+                y domina la magia elemental.</p>
+              <div class="portfolio-meta">
+                <span>Plataforma: PC / Consolas</span>
+                <span>Motor: Unity 3D</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         08. PARTICIPATION / CONVERSIÓN
+         ========================================== -->
+    <section class="section section-alt" id="participacion">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Comunidad & Conversión</span>
+          <h2 class="section-title">¿Quieres formar parte?</h2>
+          <p class="section-subtitle">
+            Tanto si eres un apasionado de los videojuegos, un estudio en busca de aliados o quieres seguir nuestras
+            novedades, tenemos un camino para ti.
+          </p>
+        </div>
+
+        <div class="conversion-grid">
+          <!-- 1. Playtester -->
+          <div class="conversion-card">
+            <div class="conversion-icon">
+              🎮
+            </div>
+            <h3>Playtester</h3>
+            <p>¿Quieres probar nuestros juegos antes que nadie y ayudarnos a pulir cada detalle con tu valioso feedback?
+            </p>
+            <button class="btn btn-primary btn-sm" onclick="openPlaytesterModal()">
+              <span>Registrarme como Playtester</span>
+            </button>
+          </div>
+
+          <!-- 2. Business / Developers -->
+          <div class="conversion-card">
+            <div class="conversion-icon">
+              🤝
+            </div>
+            <h3>Business / Developers</h3>
+            <p>¿Tienes un proyecto en mente, buscas un equipo para outsourcing o quieres co-desarrollar con Entytec?</p>
+            <a href="#contacto" class="btn btn-secondary btn-sm" onclick="preselectIntent('publisher')">
+              <span>Proponer colaboración</span>
+            </a>
+          </div>
+
+          <!-- 3. Comunidad / Newsletter -->
+          <div class="conversion-card">
+            <div class="conversion-icon">
+              📬
+            </div>
+            <h3>Comunidad</h3>
+            <p>Recibe noticias exclusivas, devlogs y fechas de lanzamiento directamente en tu bandeja de entrada.</p>
+            <form class="newsletter-mini-form" onsubmit="handleNewsletterSubmit(event, this)">
+              <input type="email" placeholder="Tu correo electrónico" class="newsletter-mini-input" required>
+              <button type="submit" class="btn btn-primary btn-sm">Unirme</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         09. CONTACTO / TRABAJEMOS JUNTOS
+         ========================================== -->
+    <section class="section" id="contacto">
+      <div class="container">
+        <div class="text-center">
+          <span class="section-label">Contacto</span>
+          <h2 class="section-title">Trabajemos juntos</h2>
+          <p class="section-subtitle">
+            Cuéntanos sobre tu idea, juego o necesidad técnica. Nuestro equipo se pondrá en contacto a la brevedad.
+          </p>
+        </div>
+
+        <div class="contact-wrapper">
+          <!-- Sidebar -->
+          <div class="contact-sidebar">
+            <div>
+              <h3>Impulsemos tu próximo videojuego</h3>
+              <p>
+                Ya seas publisher, desarrollador independiente o una empresa que busca crear una experiencia interactiva
+                de primer nivel, estamos listos para colaborar.
+              </p>
+
+              <ul class="contact-info-list">
+                <li class="contact-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span>Santo Domingo, República Dominicana</span>
+                </li>
+                <li class="contact-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                  <span>contact@entytec.com</span>
+                </li>
+                <li class="contact-info-item">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                  <span>Lunes a Viernes: 9:00 AM - 6:00 PM (AST)</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="contact-socials">
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
+                aria-label="Twitter">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+              </a>
+              <a href="https://discord.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
+                aria-label="Discord">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.893.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                </svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
+                aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="social-circle-btn"
+                aria-label="YouTube">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form-container">
+            <form id="contact-form" onsubmit="handleContactSubmit(event)">
+              <!-- Intent Chips -->
+              <div class="intent-selector">
+                <span class="intent-label">¿Cuál es tu objetivo?</span>
+                <div class="intent-chips">
+                  <button type="button" class="intent-chip active" data-intent="publisher"
+                    onclick="selectIntent(this, '¿Eres Publisher?')">¿Eres Publisher?</button>
+                  <button type="button" class="intent-chip" data-intent="game-dev"
+                    onclick="selectIntent(this, '¿Buscas un estudio de desarrollo?')">¿Buscas estudio de
+                    desarrollo?</button>
+                  <button type="button" class="intent-chip" data-intent="outsourcing"
+                    onclick="selectIntent(this, '¿Necesitas outsourcing?')">¿Necesitas outsourcing?</button>
+                </div>
+                <input type="hidden" id="selected-intent" name="intent" value="¿Eres Publisher?">
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="contact-name">Nombre completo *</label>
+                  <input type="text" id="contact-name" name="name" class="form-control" placeholder="Ej. Carlos Morales"
+                    required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-company">Empresa / Estudio</label>
+                  <input type="text" id="contact-company" name="company" class="form-control"
+                    placeholder="Ej. Pixel Games">
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-email">Email corporativo *</label>
+                  <input type="email" id="contact-email" name="email" class="form-control"
+                    placeholder="nombre@empresa.com" required>
+                </div>
+
+                <div class="form-group">
+                  <label for="contact-project-type">Tipo de proyecto *</label>
+                  <select id="contact-project-type" name="project_type" class="form-control" required>
+                    <option value="Desarrollo de Videojuego Completo">Desarrollo de Videojuego Completo</option>
+                    <option value="Publicación / Publishing">Publicación / Publishing</option>
+                    <option value="Outsourcing de Programación o Arte">Outsourcing de Programación o Arte</option>
+                    <option value="Consultoría y Auditoría Técnica">Consultoría y Auditoría Técnica</option>
+                    <option value="Otro">Otro</option>
+                  </select>
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="contact-message">Detalles de la propuesta o mensaje *</label>
+                  <textarea id="contact-message" name="message" class="form-control"
+                    placeholder="Cuéntanos sobre el alcance, plataformas estimadas, plazos y objetivos de tu proyecto..."
+                    required></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg" style="margin-top: 1.5rem; width: 100%;">
+                <span>ENVIAR PROPUESTA</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================
+       10. FOOTER
+       ========================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="entytec-logo-horizontal.png" alt="Entytec Logo">
+          <p>Creamos experiencias que merecen ser jugadas. Estudio independiente de desarrollo de videojuegos en
+            República Dominicana.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navegación</h4>
+          <ul class="footer-links">
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#proyectos">Portafolio</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Videojuegos</h4>
+          <ul class="footer-links">
+            <li><a href="#proyectos" onclick="openProjectModal('antrio')">Antrio (Steam)</a></li>
+            <li><a href="#proyectos" onclick="openProjectModal('alchemist')">The Alchemist Apprentice</a></li>
+            <li><a href="#proyectos" onclick="openProjectModal('yarari')">Yarari: The Sacred Valley</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter">
+          <h4 class="footer-title">Newsletter</h4>
+          <p>Mantente al día con nuestros devlogs, betas y lanzamientos.</p>
+          <form class="newsletter-mini-form" onsubmit="handleNewsletterSubmit(event, this)">
+            <input type="email" placeholder="Email..." class="newsletter-mini-input"
+              style="background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15);" required>
+            <button type="submit" class="btn btn-primary btn-sm">OK</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Entytec. Todos los derechos reservados.</span>
+        <span>Hecho con pasión en República Dominicana 🇩🇴</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       MODAL: DETALLES DE PROYECTO
+       ========================================== -->
+  <div class="modal-backdrop" id="project-modal" onclick="handleBackdropClick(event, 'project-modal')">
+    <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close-btn" onclick="closeModal('project-modal')" aria-label="Cerrar modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <div class="modal-hero-img-box">
+        <img id="modal-project-img" src="Antrio/3.jpg"
+          alt="Project Cover" class="modal-hero-img">
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-header-meta">
+          <span class="badge badge-orange" id="modal-category">Action / Platformer</span>
+          <span class="badge badge-steam" id="modal-status">Disponible en Steam</span>
+        </div>
+
+        <h3 class="modal-title" id="modal-title">Antrio</h3>
+        <p class="modal-tagline" id="modal-tagline">2D Action-Platformer de ritmo rápido inspirado en los clásicos de
+          8-bits.</p>
+        <p class="modal-desc" id="modal-desc">Descripción completa del proyecto...</p>
+
+        <div class="modal-specs-grid">
+          <div class="modal-spec-item">
+            <span class="modal-spec-label">Plataformas</span>
+            <span class="modal-spec-val" id="modal-platform">PC · Steam</span>
+          </div>
+          <div class="modal-spec-item">
+            <span class="modal-spec-label">Motor</span>
+            <span class="modal-spec-val" id="modal-engine">Unity 3D</span>
+          </div>
+          <div class="modal-spec-item">
+            <span class="modal-spec-label">Lanzamiento</span>
+            <span class="modal-spec-val" id="modal-year">2024</span>
+          </div>
+        </div>
+
+        <div class="modal-gallery-strip" id="modal-gallery-strip">
+          <!-- Miniaturas dinámicas -->
+        </div>
+
+        <div class="modal-footer-actions">
+          <a href="https://store.steampowered.com" target="_blank" rel="noopener noreferrer" class="btn btn-steam"
+            id="modal-steam-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0a12 12 0 0 0-12 12c0 5.4 3.5 10 8.4 11.5l1.6-4.8c-.2-.1-.4-.2-.6-.3a2.9 2.9 0 0 1-1.7-2.6 3 3 0 0 1 3-3c.4 0 .8.1 1.2.3l4.3-3.1C16.1 10 16 9.5 16 9a5 5 0 1 1 5 5c-.7 0-1.4-.2-2-.5l-3.3 4.6c.1.4.1.8.1 1.2a3.7 3.7 0 0 1-3.7 3.7c-1.3 0-2.5-.7-3.1-1.8L3.6 23.3A12 12 0 0 0 12 24a12 12 0 0 0 12-12A12 12 0 0 0 12 0z" />
+            </svg>
+            <span>Ver en Steam</span>
+          </a>
+          <button class="btn btn-primary" onclick="showToast('Demo solicitada. Te redirigiremos...');">
+            <span>Jugar Demo / Probar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL: REGISTRO DE PLAYTESTER
+       ========================================== -->
+  <div class="modal-backdrop" id="playtester-modal" onclick="handleBackdropClick(event, 'playtester-modal')">
+    <div class="modal-container" role="dialog" aria-modal="true" style="max-width: 550px;">
+      <button class="modal-close-btn" onclick="closeModal('playtester-modal')" aria-label="Cerrar modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <div class="modal-body" style="padding: 2.5rem;">
+        <div class="text-center" style="margin-bottom: 1.5rem;">
+          <div class="conversion-icon" style="margin: 0 auto 1rem;">🎮</div>
+          <h3 class="modal-title" style="font-size: 1.75rem;">Únete como Playtester</h3>
+          <p class="modal-desc" style="margin-bottom: 0;">Prueba las versiones alfa y beta de nuestros próximos juegos y
+            deja tu huella en los créditos.</p>
+        </div>
+
+        <form onsubmit="handlePlaytesterSubmit(event)">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="pt-name">Nombre / Gamer Tag *</label>
+            <input type="text" id="pt-name" class="form-control" placeholder="Ej. GamerPro88" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="pt-email">Correo electrónico *</label>
+            <input type="email" id="pt-email" class="form-control" placeholder="tu@email.com" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label>Plataformas disponibles</label>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px;">
+              <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox" checked> PC / Steam
+              </label>
+              <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox"> Android
+              </label>
+              <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox"> iOS
+              </label>
+              <label style="font-size: 0.85rem; display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                <input type="checkbox"> Consolas
+              </label>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <span>Enviar Registro</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/projects-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>
