@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Games Portfolio | Entytec Game Studio</title>
+  <meta name="description"
+    content="Explore the full catalog of video games developed by Entytec: from fast-paced 2D action-platformers to magical puzzles, simulators, and educational experiences.">
+  <meta name="keywords"
+    content="video games, portfolio, Antrio, Entytec, Schell Games style, Unity 3D, Steam, itch.io, educational games">
+  <meta property="og:title" content="Video Games Portfolio | Entytec Studio">
+  <meta property="og:description"
+    content="Interactive catalog of video games and interactive experiences created by Entytec Game Studio.">
+  <meta property="og:image" content="Antrio/1.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="Logo.imagen.jpg">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+
+<body>
+
+  <!-- ==========================================
+       01. HEADER / STICKY NAVIGATION
+       ========================================== -->
+  <header class="site-header" id="header">
+    <div class="container header-container">
+      <a href="index.html#inicio" class="brand-logo" aria-label="Entytec Home">
+        <img src="entytec-logo-horizontal.png" alt="Entytec Logo" id="header-logo">
+      </a>
+
+      <nav aria-label="Main navigation">
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html#inicio" class="nav-link">Home</a></li>
+          <li><a href="index.html#nosotros" class="nav-link">About</a></li>
+          <li><a href="index.html#servicios" class="nav-link">Services</a></li>
+          <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+          <li><a href="index.html#contacto" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a href="index.html#contacto" class="btn btn-primary btn-sm">Let's Talk</a>
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================
+         02. PORTFOLIO HERO (SCHELL GAMES STYLE)
+         ========================================== -->
+    <section class="portfolio-page-hero">
+      <div class="container" style="position: relative; z-index: 2;">
+        <div class="portfolio-badge-pill">
+          <span class="pulse-dot"></span>
+          <span>OFFICIAL GAMES CATALOG</span>
+        </div>
+        <h1 class="portfolio-page-title">OUR GAMES</h1>
+        <p class="portfolio-page-desc">
+          From fast-paced 2D action-platformers to magical puzzle adventures, genetic simulators, and educational Unity 3D experiences. Crafted with passion and technical precision.
+        </p>
+
+        <div class="portfolio-hero-actions">
+          <a href="https://entytec.itch.io/" target="_blank" rel="noopener noreferrer" class="btn btn-itch btn-lg">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M2.064 4.657C.908 5.349 0 6.808 0 8.386v.457c0 1.576 1.255 2.835 2.835 2.835.78 0 1.488-.318 2-.835a2.83 2.83 0 0 0 2 .835 2.83 2.83 0 0 0 2-.835 2.83 2.83 0 0 0 2 .835 2.83 2.83 0 0 0 2-.835 2.83 2.83 0 0 0 2 .835c1.58 0 2.835-1.26 2.835-2.835v-.457c0-1.578-.908-3.037-2.064-3.729L17.04 3H6.96L2.064 4.657ZM5 13v6.5c0 .828.672 1.5 1.5 1.5h11c.828 0 1.5-.672 1.5-1.5V13H5Z"/>
+            </svg>
+            <span>View profile on itch.io</span>
+          </a>
+          <a href="index.html#contacto" class="btn btn-glass btn-lg">
+            <span>Start a project with us</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         03. ADVANCED SEARCH & MULTI-FILTER BAR
+         ========================================== -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="portfolio-controls" id="portfolio-controls">
+          <!-- Search Bar -->
+          <div class="search-wrap">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="portfolio-search-input" placeholder="Search video games by title, genre, or keyword..." aria-label="Search projects">
+            <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear search" style="display: none;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Category Filters Row -->
+          <div class="filter-group">
+            <span class="filter-group-label">Category:</span>
+            <div class="filter-pills" id="category-filter-pills">
+              <button class="filter-pill active" data-category="all">All</button>
+              <button class="filter-pill" data-category="Action / Platformer">Action / Platformer</button>
+              <button class="filter-pill" data-category="Simulation / Cozy">Simulation / Cozy</button>
+              <button class="filter-pill" data-category="Educational">Educational</button>
+              <button class="filter-pill" data-category="Arcade / Runner">Arcade / Runner</button>
+              <button class="filter-pill" data-category="Puzzle / Arcade">Puzzle / Arcade</button>
+            </div>
+          </div>
+
+          <!-- Platform Filters Row -->
+          <div class="filter-group">
+            <span class="filter-group-label">Platform:</span>
+            <div class="filter-pills" id="platform-filter-pills">
+              <button class="filter-pill active" data-platform="all">All</button>
+              <button class="filter-pill" data-platform="Steam">PC / Steam</button>
+              <button class="filter-pill" data-platform="itch.io">Web / itch.io</button>
+            </div>
+          </div>
+
+          <!-- Filter Status & Counter -->
+          <div class="filter-controls-row">
+            <div class="results-count" id="results-count">
+              Showing <strong id="visible-count">7</strong> of <strong id="total-count">7</strong> video games
+            </div>
+            <button class="btn-text-reset" id="btn-reset-filters" style="display: none;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              <span>Reset filters</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ==========================================
+             04. PROJECTS GRID (SCHELL GAMES STYLE)
+             ========================================== -->
+        <div class="portfolio-page-grid" id="portfolio-page-grid" style="margin-top: 2.5rem;">
+          <!-- Renderizado dinámico desde js/main.js mediante initPortfolioPage() -->
+        </div>
+
+        <!-- Empty State Container -->
+        <div class="no-results" id="portfolio-no-results" style="display: none;">
+          <div class="no-results-icon">🎮</div>
+          <h3>No video games found</h3>
+          <p>There are no titles matching your search criteria or selected filters.</p>
+          <button class="btn btn-primary" onclick="resetPortfolioFilters()">
+            <span>View all games</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         05. CALL TO ACTION BLOCK
+         ========================================== -->
+    <section class="section section-alt text-center" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+      <div class="container" style="max-width: 760px;">
+        <span class="section-label">Have an idea in mind?</span>
+        <h2 class="section-title" style="margin-bottom: 1rem;">Let's bring your next game to life</h2>
+        <p class="section-subtitle" style="margin-bottom: 2rem;">
+          We collaborate with publishers, studios, and indie creators offering full-cycle development, 2D/3D art, rapid prototyping, and Unity programming.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a href="index.html#contacto" class="btn btn-primary btn-lg">
+            <span>Contact the Studio</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+          <a href="https://entytec.itch.io/" target="_blank" rel="noopener noreferrer" class="btn btn-itch btn-lg">
+            <span>Visit itch.io</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================
+       06. FOOTER
+       ========================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="entytec-logo-horizontal.png" alt="Entytec Logo">
+          <p>Creating experiences worth playing. Independent video game development studio based in the Dominican Republic.</p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="index.html#inicio">Home</a></li>
+            <li><a href="index.html#nosotros">About</a></li>
+            <li><a href="index.html#servicios">Services</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="index.html#contacto">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Games</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="openProjectModal('antrio')">Antrio (Steam & itch.io)</a></li>
+            <li><a href="javascript:void(0)" onclick="openProjectModal('my-perfect-pet')">My Perfect Pet</a></li>
+            <li><a href="javascript:void(0)" onclick="openProjectModal('alien-lab')">Alien Lab</a></li>
+            <li><a href="javascript:void(0)" onclick="openProjectModal('your-turn')">You Turn</a></li>
+            <li><a href="javascript:void(0)" onclick="openProjectModal('bubble-effect')">Bubble Effect</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter">
+          <h4 class="footer-title">Newsletter</h4>
+          <p>Stay up to date with our devlogs, betas, and upcoming launches.</p>
+          <form class="newsletter-mini-form" onsubmit="handleNewsletterSubmit(event, this)">
+            <input type="email" placeholder="Email..." class="newsletter-mini-input"
+              style="background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15);" required>
+            <button type="submit" class="btn btn-primary btn-sm">OK</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Entytec. All rights reserved.</span>
+        <span>Crafted with passion in the Dominican Republic 🇩🇴</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       07. MODAL: DETALLES DE PROYECTO
+       ========================================== -->
+  <div class="modal-backdrop" id="project-modal" onclick="handleBackdropClick(event, 'project-modal')">
+    <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <button class="modal-close-btn" onclick="closeModal('project-modal')" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <div class="modal-hero-img-box">
+        <img id="modal-project-img" src="Antrio/3.jpg" alt="Project Cover" class="modal-hero-img">
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-header-meta">
+          <span class="badge badge-orange" id="modal-category">Action / Platformer</span>
+          <span class="badge badge-steam" id="modal-status">Available on Steam</span>
+        </div>
+
+        <h3 class="modal-title" id="modal-title">Antrio</h3>
+        <p class="modal-tagline" id="modal-tagline">A fast-paced 2D action-platformer inspired by the golden era of 8-bit classics.</p>
+        <p class="modal-desc" id="modal-desc">Full project description...</p>
+
+        <div class="modal-specs-grid">
+          <div class="modal-spec-item">
+            <span class="modal-spec-label">Platforms</span>
+            <span class="modal-spec-val" id="modal-platform">PC · Steam</span>
+          </div>
+          <div class="modal-spec-item">
+            <span class="modal-spec-label">Engine</span>
+            <span class="modal-spec-val" id="modal-engine">Unity 3D</span>
+          </div>
+          <div class="modal-spec-item">
+            <span class="modal-spec-label">Release</span>
+            <span class="modal-spec-val" id="modal-year">2024</span>
+          </div>
+        </div>
+
+        <div class="modal-features-box" id="modal-features-box" style="margin-bottom: 1.5rem;">
+          <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary); margin-bottom: 0.75rem;">
+            Key Features
+          </h4>
+          <ul class="modal-features-list" id="modal-features-list" style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+            <!-- Dynamic features -->
+          </ul>
+        </div>
+
+        <div class="modal-gallery-strip" id="modal-gallery-strip">
+          <!-- Dynamic thumbnails -->
+        </div>
+
+        <div class="modal-footer-actions" id="modal-actions-container">
+          <!-- Dynamic action buttons -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- JavaScript Modules -->
+  <script src="js/projects-data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+
+</html>

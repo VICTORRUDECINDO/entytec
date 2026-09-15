@@ -1,40 +1,41 @@
 # Entytec - Official Website & Portfolio
 
-Sitio web oficial y portafolio interactivo de **Entytec** — Estudio de Desarrollo de Videojuegos y Servicios Digitales en República Dominicana.
+Official website and interactive portfolio for **Entytec** — Video Game Development Studio based in the Dominican Republic.
 
-## 🚀 Tecnologías Utilizadas
+## 🚀 Tech Stack
 
-- **HTML5** semántico y estructurado.
-- **CSS3** con diseño moderno, responsive, efectos glassmorphism y animaciones fluidas.
-- **JavaScript (ES6+)** para interactividad, filtrado de portafolio, modal dinámico de proyectos y formulario de contacto.
+- **HTML5**: Semantic and modern markup.
+- **CSS3**: Modern responsive design, glassmorphism accents, and fluid transitions.
+- **JavaScript (ES6+)**: Interactive filtering, hero carousel, dynamic project modals, and form handling.
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```text
 Entytec/
-├── Antrio/                   # Galería y capturas del juego Antrio
-├── Otros proyectos/          # Capturas y recursos de proyectos adicionales
+├── Antrio/                   # Screenshots and media assets for Antrio
+├── Otros proyectos/          # Media assets for other studio titles
 ├── js/
-│   ├── main.js               # Lógica interactiva principal (navegación, modales, etc.)
-│   └── projects-data.js      # Catálogo de datos de proyectos
+│   ├── main.js               # Core interactive logic (nav, modals, toasts, filters)
+│   └── projects-data.js      # Structured games catalog
 ├── styles/
-│   └── main.css              # Hoja de estilos principal y diseño responsivo
+│   └── main.css              # Main design system & responsive styling
 ├── entytec-logo-horizontal.png
-├── Logo.imagen.jpg           # Favicon e icono de marca
-├── index.html                # Página principal
-├── vercel.json               # Configuración para despliegue en Vercel
-└── .gitignore                # Archivos ignorados por Git
+├── Logo.imagen.jpg           # Favicon and brand mark
+├── index.html                # Main landing page
+├── portfolio.html            # Dedicated catalog & portfolio page
+├── vercel.json               # Vercel deployment configuration
+└── .gitignore                # Git ignore patterns
 ```
 
-## 🌐 Despliegue en Vercel
+## 🌐 Deployment to Vercel
 
-Este proyecto es un sitio web estático optimizado para desplegarse instantáneamente en **Vercel**:
+This project is a static web application optimized for instant deployment on **Vercel**:
 
-1. Sube este repositorio a tu cuenta de **GitHub**.
-2. Ingresa a [Vercel](https://vercel.com) e inicia sesión con tu cuenta de GitHub.
-3. Haz clic en **"Add New..."** > **"Project"**.
-4. Selecciona el repositorio `Entytec`.
-5. En la configuración del proyecto:
+1. Push this repository to your **GitHub** account.
+2. Sign in to [Vercel](https://vercel.com) with GitHub.
+3. Click **"Add New..."** > **"Project"**.
+4. Select the `Entytec` repository.
+5. In project settings:
    - **Framework Preset**: *Other*
    - **Root Directory**: `./`
-6. Haz clic en **"Deploy"**. ¡Tu sitio estará en vivo en segundos con HTTPS y CDN global!
+6. Click **"Deploy"**. Your studio site will be live globally in seconds with automatic HTTPS and CDN caching!

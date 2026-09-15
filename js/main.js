@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initStickyHeader();
   initMobileMenu();
   initHeroCarousel();
-  initPortfolioFilters();
+  renderPortfolio();
+  initPortfolioPage();
   initScrollSpy();
   initKeyboardEvents();
 });
@@ -261,11 +262,250 @@ function switchLatestImage(src, btnElement) {
 }
 
 /* ==========================================================================
-   05. PORTFOLIO FILTERING
+   05. PORTFOLIO DYNAMIC RENDERING & FILTERING (Visual Hover Cards)
    ========================================================================== */
+function renderPortfolio() {
+  const grid = document.getElementById("portfolio-grid");
+  const filtersContainer = document.getElementById("portfolio-filters");
+
+  if (!grid || typeof ENT_PROJECTS === "undefined" || !ENT_PROJECTS.length) {
+    return;
+  }
+
+  // Home page presentation: exactly 5 games
+  const homeProjects = ENT_PROJECTS.slice(0, 5);
+
+  if (filtersContainer) {
+    filtersContainer.style.display = "none";
+  }
+
+  // Render Visual Project Cards (pure image in default state + rich hover info)
+  grid.innerHTML = homeProjects.map((project) => {
+    const badgeBg = project.badgeColor ? `badge-${project.badgeColor}` : "badge-orange";
+    return `
+      <div class="portfolio-card-visual" data-category="${project.category}" onclick="openProjectModal('${project.id}')">
+        <img src="${project.thumbnail}" alt="${project.title}" class="pv-img" loading="lazy" onerror="this.onerror=null;this.src='Antrio/1.jpg';">
+        
+        <div class="pv-overlay">
+          <div class="pv-tags">
+            <span class="badge ${badgeBg}">${project.category}</span>
+            <span class="badge" style="background: rgba(255,255,255,0.15); color: #fff;">${project.platform}</span>
+            ${project.itchUrl ? `<span class="badge badge-itch">itch.io</span>` : ""}
+            ${project.steamUrl && project.id === "antrio" ? `<span class="badge badge-steam">Steam</span>` : ""}
+          </div>
+          <h3 class="pv-title">${project.title}</h3>
+          <p class="pv-tagline">${project.tagline}</p>
+          <div style="display: flex; gap: 8px; align-items: center; margin-top: auto;">
+            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openProjectModal('${project.id}')">
+              <span>View Details / Play</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+            ${project.itchUrl ? `
+            <a href="${project.itchUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-itch btn-sm" onclick="event.stopPropagation()">
+              <span>itch.io</span>
+            </a>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+/* ==========================================================================
+   05B. SCHELL GAMES-STYLE PORTFOLIO PAGE LOGIC (portfolio.html)
+   ========================================================================== */
+let portfolioFilterCategory = "all";
+let portfolioFilterPlatform = "all";
+let portfolioSearchQuery = "";
+
+function initPortfolioPage() {
+  const pageGrid = document.getElementById("portfolio-page-grid");
+  if (!pageGrid || typeof ENT_PROJECTS === "undefined") return;
+
+  const searchInput = document.getElementById("portfolio-search-input");
+  const clearBtn = document.getElementById("search-clear-btn");
+  const categoryPills = document.querySelectorAll("#category-filter-pills .filter-pill");
+  const platformPills = document.querySelectorAll("#platform-filter-pills .filter-pill");
+  const resetBtn = document.getElementById("btn-reset-filters");
+
+  // Search input handler
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      portfolioSearchQuery = e.target.value.trim().toLowerCase();
+      if (clearBtn) {
+        clearBtn.style.display = portfolioSearchQuery ? "flex" : "none";
+      }
+      applyPortfolioFilters();
+    });
+  }
+
+  // Clear search button
+  if (clearBtn && searchInput) {
+    clearBtn.addEventListener("click", () => {
+      searchInput.value = "";
+      portfolioSearchQuery = "";
+      clearBtn.style.display = "none";
+      applyPortfolioFilters();
+      searchInput.focus();
+    });
+  }
+
+  // Category pills
+  categoryPills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      categoryPills.forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
+      portfolioFilterCategory = pill.getAttribute("data-category");
+      applyPortfolioFilters();
+    });
+  });
+
+  // Platform pills
+  platformPills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      platformPills.forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
+      portfolioFilterPlatform = pill.getAttribute("data-platform");
+      applyPortfolioFilters();
+    });
+  });
+
+  // Reset button
+  if (resetBtn) {
+    resetBtn.addEventListener("click", resetPortfolioFilters);
+  }
+
+  // Initial render
+  applyPortfolioFilters();
+}
+
+function resetPortfolioFilters() {
+  portfolioFilterCategory = "all";
+  portfolioFilterPlatform = "all";
+  portfolioSearchQuery = "";
+
+  const searchInput = document.getElementById("portfolio-search-input");
+  const clearBtn = document.getElementById("search-clear-btn");
+  if (searchInput) searchInput.value = "";
+  if (clearBtn) clearBtn.style.display = "none";
+
+  document.querySelectorAll("#category-filter-pills .filter-pill").forEach((pill) => {
+    pill.classList.toggle("active", pill.getAttribute("data-category") === "all");
+  });
+
+  document.querySelectorAll("#platform-filter-pills .filter-pill").forEach((pill) => {
+    pill.classList.toggle("active", pill.getAttribute("data-platform") === "all");
+  });
+
+  applyPortfolioFilters();
+}
+
+function applyPortfolioFilters() {
+  const pageGrid = document.getElementById("portfolio-page-grid");
+  const noResults = document.getElementById("portfolio-no-results");
+  const visibleCountEl = document.getElementById("visible-count");
+  const totalCountEl = document.getElementById("total-count");
+  const resetBtn = document.getElementById("btn-reset-filters");
+
+  if (!pageGrid || typeof ENT_PROJECTS === "undefined") return;
+
+  const filtered = ENT_PROJECTS.filter((project) => {
+    // Category match
+    const matchesCategory =
+      portfolioFilterCategory === "all" ||
+      project.category.toLowerCase().includes(portfolioFilterCategory.toLowerCase());
+
+    // Platform match
+    let matchesPlatform = true;
+    if (portfolioFilterPlatform !== "all") {
+      const platformLower = project.platform.toLowerCase();
+      const targetPlatform = portfolioFilterPlatform.toLowerCase();
+      if (targetPlatform === "steam") {
+        matchesPlatform = platformLower.includes("steam") || !!project.steamUrl;
+      } else if (targetPlatform === "itch.io") {
+        matchesPlatform = platformLower.includes("itch") || platformLower.includes("web") || !!project.itchUrl;
+      } else if (targetPlatform === "mobile") {
+        matchesPlatform = platformLower.includes("mobile") || platformLower.includes("android") || platformLower.includes("ios");
+      } else if (targetPlatform === "consolas") {
+        matchesPlatform = platformLower.includes("consolas") || platformLower.includes("console");
+      } else {
+        matchesPlatform = platformLower.includes(targetPlatform);
+      }
+    }
+
+    // Search query match
+    let matchesSearch = true;
+    if (portfolioSearchQuery) {
+      const searchSource = `${project.title} ${project.tagline} ${project.category} ${project.platform} ${project.engine} ${project.description || ""}`.toLowerCase();
+      matchesSearch = searchSource.includes(portfolioSearchQuery);
+    }
+
+    return matchesCategory && matchesPlatform && matchesSearch;
+  });
+
+  // Update counts
+  if (visibleCountEl) visibleCountEl.textContent = filtered.length;
+  if (totalCountEl) totalCountEl.textContent = ENT_PROJECTS.length;
+
+  // Toggle reset button
+  const hasActiveFilters =
+    portfolioFilterCategory !== "all" ||
+    portfolioFilterPlatform !== "all" ||
+    portfolioSearchQuery !== "";
+
+  if (resetBtn) {
+    resetBtn.style.display = hasActiveFilters ? "inline-flex" : "none";
+  }
+
+  // Handle empty state
+  if (filtered.length === 0) {
+    pageGrid.style.display = "none";
+    if (noResults) noResults.style.display = "block";
+    return;
+  }
+
+  pageGrid.style.display = "grid";
+  if (noResults) noResults.style.display = "none";
+
+  // Render cards (pure clean image resting state + rich hover overlay)
+  pageGrid.innerHTML = filtered.map((project) => {
+    const badgeBg = project.badgeColor ? `badge-${project.badgeColor}` : "badge-orange";
+    return `
+      <div class="portfolio-card-visual" data-category="${project.category}" onclick="openProjectModal('${project.id}')">
+        <img src="${project.thumbnail}" alt="${project.title}" class="pv-img" loading="lazy" onerror="this.onerror=null;this.src='Antrio/1.jpg';">
+        
+        <div class="pv-overlay">
+          <div class="pv-tags">
+            <span class="badge ${badgeBg}">${project.category}</span>
+            <span class="badge" style="background: rgba(255,255,255,0.15); color: #fff;">${project.platform}</span>
+            ${project.itchUrl ? `<span class="badge badge-itch">itch.io</span>` : ""}
+            ${project.steamUrl && project.id === "antrio" ? `<span class="badge badge-steam">Steam</span>` : ""}
+          </div>
+          <h3 class="pv-title">${project.title}</h3>
+          <p class="pv-tagline">${project.tagline}</p>
+          <div style="display: flex; gap: 8px; align-items: center; margin-top: auto;">
+            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); openProjectModal('${project.id}')">
+              <span>View Details / Play</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+            ${project.itchUrl ? `
+            <a href="${project.itchUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-itch btn-sm" onclick="event.stopPropagation()">
+              <span>itch.io</span>
+            </a>` : ""}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
 function initPortfolioFilters() {
   const filterButtons = document.querySelectorAll("#portfolio-filters .filter-btn");
-  const cards = document.querySelectorAll("#portfolio-grid .portfolio-card");
+  const cards = document.querySelectorAll("#portfolio-grid .portfolio-card-visual");
 
   filterButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -277,10 +517,10 @@ function initPortfolioFilters() {
       cards.forEach((card) => {
         const category = card.getAttribute("data-category");
         if (filterValue === "all" || category === filterValue) {
-          card.style.display = "flex";
+          card.style.display = "block";
           card.style.opacity = "0";
           setTimeout(() => {
-            card.style.transition = "opacity 0.3s ease";
+            card.style.transition = "opacity 0.3s ease, transform var(--transition-normal)";
             card.style.opacity = "1";
           }, 20);
         } else {
@@ -311,7 +551,8 @@ function openProjectModal(projectId) {
   const categoryBadge = document.getElementById("modal-category");
   const statusBadge = document.getElementById("modal-status");
   const galleryStrip = document.getElementById("modal-gallery-strip");
-  const steamLink = document.getElementById("modal-steam-link");
+  const featuresList = document.getElementById("modal-features-list");
+  const actionsContainer = document.getElementById("modal-actions-container");
 
   if (title) title.textContent = project.title;
   if (tagline) tagline.textContent = project.tagline;
@@ -319,25 +560,105 @@ function openProjectModal(projectId) {
   if (platform) platform.textContent = project.platform;
   if (engine) engine.textContent = project.engine;
   if (year) year.textContent = project.releaseYear;
-  if (heroImg) heroImg.src = project.coverImage;
-  if (categoryBadge) categoryBadge.textContent = project.category;
-  if (statusBadge) statusBadge.textContent = project.status;
-  if (steamLink) steamLink.href = project.steamUrl || "https://store.steampowered.com";
+  if (heroImg) heroImg.src = project.coverImage || project.thumbnail;
+
+  if (categoryBadge) {
+    categoryBadge.textContent = project.category;
+    categoryBadge.className = `badge badge-${project.badgeColor || "orange"}`;
+  }
+  if (statusBadge) {
+    statusBadge.textContent = project.status;
+    statusBadge.className = project.status.toLowerCase().includes("steam")
+      ? "badge badge-steam"
+      : "badge badge-orange";
+  }
+
+  // Build Features List
+  if (featuresList) {
+    featuresList.innerHTML = "";
+    if (project.features && project.features.length) {
+      project.features.forEach((feat) => {
+        const li = document.createElement("li");
+        li.style.display = "flex";
+        li.style.alignItems = "center";
+        li.style.gap = "8px";
+        li.style.fontSize = "0.92rem";
+        li.style.color = "var(--color-text-main)";
+        li.innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF5500" stroke-width="2.5" style="flex-shrink:0;">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <span>${feat}</span>
+        `;
+        featuresList.appendChild(li);
+      });
+    }
+  }
 
   // Build Gallery Thumbnails
-  if (galleryStrip && project.gallery) {
+  if (galleryStrip) {
     galleryStrip.innerHTML = "";
-    project.gallery.forEach((imgPath, idx) => {
-      const thumb = document.createElement("div");
-      thumb.className = `modal-thumb ${idx === 0 ? "active" : ""}`;
-      thumb.innerHTML = `<img src="${imgPath}" alt="${project.title} Screenshot ${idx + 1}">`;
-      thumb.addEventListener("click", () => {
-        heroImg.src = imgPath;
-        document.querySelectorAll(".modal-thumb").forEach((t) => t.classList.remove("active"));
-        thumb.classList.add("active");
+    const galleryItems = project.gallery && project.gallery.length ? project.gallery : [project.thumbnail];
+    if (galleryItems.length > 1) {
+      galleryItems.forEach((imgPath, idx) => {
+        const thumb = document.createElement("div");
+        thumb.className = `modal-thumb ${idx === 0 ? "active" : ""}`;
+        thumb.innerHTML = `<img src="${imgPath}" alt="${project.title} Screenshot ${idx + 1}" onerror="this.onerror=null;this.src='Antrio/1.jpg';">`;
+        thumb.addEventListener("click", () => {
+          heroImg.src = imgPath;
+          document.querySelectorAll(".modal-thumb").forEach((t) => t.classList.remove("active"));
+          thumb.classList.add("active");
+        });
+        galleryStrip.appendChild(thumb);
       });
-      galleryStrip.appendChild(thumb);
-    });
+    }
+  }
+
+  // Build Dynamic Action Buttons
+  if (actionsContainer) {
+    actionsContainer.innerHTML = "";
+
+    if (project.demoUrl) {
+      const demoBtn = document.createElement("a");
+      demoBtn.href = project.demoUrl;
+      demoBtn.target = "_blank";
+      demoBtn.rel = "noopener noreferrer";
+      demoBtn.className = "btn btn-primary";
+      demoBtn.innerHTML = `
+        <span>Play Demo</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      `;
+      actionsContainer.appendChild(demoBtn);
+    }
+
+    if (project.itchUrl) {
+      const itchBtn = document.createElement("a");
+      itchBtn.href = project.itchUrl;
+      itchBtn.target = "_blank";
+      itchBtn.rel = "noopener noreferrer";
+      itchBtn.className = "btn btn-itch";
+      itchBtn.innerHTML = `
+        <span>View on itch.io</span>
+      `;
+      actionsContainer.appendChild(itchBtn);
+    }
+
+    if (project.steamUrl && project.id === "antrio") {
+      const steamBtn = document.createElement("a");
+      steamBtn.href = project.steamUrl;
+      steamBtn.target = "_blank";
+      steamBtn.rel = "noopener noreferrer";
+      steamBtn.className = "btn btn-steam";
+      steamBtn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0a12 12 0 0 0-12 12c0 5.4 3.5 10 8.4 11.5l1.6-4.8c-.2-.1-.4-.2-.6-.3a2.9 2.9 0 0 1-1.7-2.6 3 3 0 0 1 3-3c.4 0 .8.1 1.2.3l4.3-3.1C16.1 10 16 9.5 16 9a5 5 0 1 1 5 5c-.7 0-1.4-.2-2-.5l-3.3 4.6c.1.4.1.8.1 1.2a3.7 3.7 0 0 1-3.7 3.7c-1.3 0-2.5-.7-3.1-1.8L3.6 23.3A12 12 0 0 0 12 24a12 12 0 0 0 12-12A12 12 0 0 0 12 0z" />
+        </svg>
+        <span>View on Steam</span>
+      `;
+      actionsContainer.appendChild(steamBtn);
+    }
   }
 
   openModal("project-modal");
@@ -391,26 +712,26 @@ function selectIntent(button, intentText) {
 }
 
 function preselectIntent(intentKey) {
-  const select = document.getElementById("contact-project-type");
+  const select = document.getElementById("contact-subject") || document.getElementById("contact-project-type");
   const chips = document.querySelectorAll(".intent-chip");
 
   if (intentKey === "publisher") {
-    if (select) select.value = "Publicación / Publishing";
+    if (select) select.value = "Collaboration / Publishing";
     chips.forEach((c) => {
       c.classList.toggle("active", c.getAttribute("data-intent") === "publisher");
     });
   } else if (intentKey === "outsourcing") {
-    if (select) select.value = "Outsourcing de Programación o Arte";
+    if (select) select.value = "Outsourcing";
     chips.forEach((c) => {
       c.classList.toggle("active", c.getAttribute("data-intent") === "outsourcing");
     });
   } else if (intentKey === "game-dev") {
-    if (select) select.value = "Desarrollo de Videojuego Completo";
+    if (select) select.value = "Full Game Development";
     chips.forEach((c) => {
       c.classList.toggle("active", c.getAttribute("data-intent") === "game-dev");
     });
   } else if (intentKey === "consulting") {
-    if (select) select.value = "Consultoría y Auditoría Técnica";
+    if (select) select.value = "General Inquiry";
   }
 }
 
@@ -419,7 +740,7 @@ function handleContactSubmit(event) {
   const form = event.target;
   const name = document.getElementById("contact-name").value;
 
-  showToast(`¡Gracias ${name}! Hemos recibido tu propuesta. Te responderemos pronto.`);
+  showToast(`Thank you ${name}! We have received your inquiry. We'll get back to you soon.`);
   form.reset();
 }
 
@@ -427,7 +748,7 @@ function handlePlaytesterSubmit(event) {
   event.preventDefault();
   const name = document.getElementById("pt-name").value;
   closeModal("playtester-modal");
-  showToast(`¡Bienvenido al equipo de Playtesters, ${name}! Te hemos enviado un email.`);
+  showToast(`Welcome to the Playtester team, ${name}! We've sent you a confirmation email.`);
   event.target.reset();
 }
 
@@ -435,7 +756,7 @@ function handleNewsletterSubmit(event, form) {
   event.preventDefault();
   const input = form.querySelector("input[type='email']");
   if (input && input.value) {
-    showToast("¡Te has suscrito correctamente al boletín de Entytec!");
+    showToast("You have successfully subscribed to the Entytec newsletter!");
     input.value = "";
   }
 }
@@ -467,4 +788,30 @@ function showToast(message, duration = 4000) {
       toast.remove();
     }, 400);
   }, duration);
+}
+
+
+/* ==========================================================================
+   07B. CONTACT TAB SWITCHER & SUBSCRIBE HANDLERS
+   ========================================================================== */
+function switchContactTab(tab) {
+  const buttons = document.querySelectorAll(".contact-tab-btn");
+  const panes = document.querySelectorAll(".contact-pane");
+
+  buttons.forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.tab === tab);
+  });
+
+  panes.forEach((pane) => {
+    pane.classList.toggle("active", pane.id === "pane-" + tab);
+  });
+}
+
+function handleSubscribeSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const emailInput = form.querySelector("input[type='email']");
+  const email = emailInput ? emailInput.value : "";
+  showToast(`Thank you for subscribing (${email})! We'll notify you about upcoming playtests and releases.`);
+  form.reset();
 }
