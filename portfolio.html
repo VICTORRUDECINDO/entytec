@@ -39,11 +39,20 @@
           <li><a href="index.html#nosotros" class="nav-link">About</a></li>
           <li><a href="index.html#servicios" class="nav-link">Services</a></li>
           <li><a href="portfolio.html" class="nav-link active">Portfolio</a></li>
+          <li><a href="index.html#comunidad" class="nav-link">Community</a></li>
           <li><a href="index.html#contacto" class="nav-link">Contact</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
+        <a href="index.html#subscribe" onclick="localStorage.setItem('openTab','subscribe')" class="btn-nav-subscribe"
+          aria-label="Subscribe to newsletter">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          <span>Subscribe</span>
+        </a>
         <a href="index.html#contacto" class="btn btn-primary btn-sm">Let's Talk</a>
         <button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu" aria-expanded="false">
           <span></span>
@@ -66,13 +75,15 @@
         </div>
         <h1 class="portfolio-page-title">OUR GAMES</h1>
         <p class="portfolio-page-desc">
-          From fast-paced 2D action-platformers to magical puzzle adventures, genetic simulators, and educational Unity 3D experiences. Crafted with passion and technical precision.
+          From fast-paced 2D action-platformers to magical puzzle adventures, genetic simulators, and educational Unity
+          3D experiences. Crafted with passion and technical precision.
         </p>
 
         <div class="portfolio-hero-actions">
           <a href="https://entytec.itch.io/" target="_blank" rel="noopener noreferrer" class="btn btn-itch btn-lg">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M2.064 4.657C.908 5.349 0 6.808 0 8.386v.457c0 1.576 1.255 2.835 2.835 2.835.78 0 1.488-.318 2-.835a2.83 2.83 0 0 0 2 .835 2.83 2.83 0 0 0 2-.835 2.83 2.83 0 0 0 2 .835 2.83 2.83 0 0 0 2-.835 2.83 2.83 0 0 0 2 .835c1.58 0 2.835-1.26 2.835-2.835v-.457c0-1.578-.908-3.037-2.064-3.729L17.04 3H6.96L2.064 4.657ZM5 13v6.5c0 .828.672 1.5 1.5 1.5h11c.828 0 1.5-.672 1.5-1.5V13H5Z"/>
+              <path
+                d="M2.064 4.657C.908 5.349 0 6.808 0 8.386v.457c0 1.576 1.255 2.835 2.835 2.835.78 0 1.488-.318 2-.835a2.83 2.83 0 0 0 2 .835 2.83 2.83 0 0 0 2-.835 2.83 2.83 0 0 0 2 .835 2.83 2.83 0 0 0 2-.835 2.83 2.83 0 0 0 2 .835c1.58 0 2.835-1.26 2.835-2.835v-.457c0-1.578-.908-3.037-2.064-3.729L17.04 3H6.96L2.064 4.657ZM5 13v6.5c0 .828.672 1.5 1.5 1.5h11c.828 0 1.5-.672 1.5-1.5V13H5Z" />
             </svg>
             <span>View profile on itch.io</span>
           </a>
@@ -95,14 +106,15 @@
           <!-- Search Bar -->
           <div class="search-wrap">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <circle cx="11" cy="11" r="8"/>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
-            <input type="text" id="portfolio-search-input" placeholder="Search video games by title, genre, or keyword..." aria-label="Search projects">
+            <input type="text" id="portfolio-search-input"
+              placeholder="Search video games by title, genre, or keyword..." aria-label="Search projects">
             <button class="search-clear-btn" id="search-clear-btn" aria-label="Clear search" style="display: none;">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="18" y1="6" x2="6" y2="18"/>
-                <line x1="6" y1="6" x2="18" y2="18"/>
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
@@ -137,8 +149,8 @@
             </div>
             <button class="btn-text-reset" id="btn-reset-filters" style="display: none;">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                <path d="M3 3v5h5" />
               </svg>
               <span>Reset filters</span>
             </button>
@@ -167,12 +179,14 @@
     <!-- ==========================================
          05. CALL TO ACTION BLOCK
          ========================================== -->
-    <section class="section section-alt text-center" style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
+    <section class="section section-alt text-center"
+      style="border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);">
       <div class="container" style="max-width: 760px;">
         <span class="section-label">Have an idea in mind?</span>
         <h2 class="section-title" style="margin-bottom: 1rem;">Let's bring your next game to life</h2>
         <p class="section-subtitle" style="margin-bottom: 2rem;">
-          We collaborate with publishers, studios, and indie creators offering full-cycle development, 2D/3D art, rapid prototyping, and Unity programming.
+          We collaborate with publishers, studios, and indie creators offering full-cycle development, 2D/3D art, rapid
+          prototyping, and Unity programming.
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
           <a href="index.html#contacto" class="btn btn-primary btn-lg">
@@ -197,7 +211,8 @@
       <div class="footer-top">
         <div class="footer-brand">
           <img src="entytec-logo-horizontal.png" alt="Entytec Logo">
-          <p>Creating experiences worth playing. Independent video game development studio based in the Dominican Republic.</p>
+          <p>Creating experiences worth playing. Independent video game development studio based in the Dominican
+            Republic.</p>
         </div>
 
         <div>
@@ -207,6 +222,7 @@
             <li><a href="index.html#nosotros">About</a></li>
             <li><a href="index.html#servicios">Services</a></li>
             <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="index.html#comunidad">Community</a></li>
             <li><a href="index.html#contacto">Contact</a></li>
           </ul>
         </div>
@@ -263,7 +279,8 @@
         </div>
 
         <h3 class="modal-title" id="modal-title">Antrio</h3>
-        <p class="modal-tagline" id="modal-tagline">A fast-paced 2D action-platformer inspired by the golden era of 8-bit classics.</p>
+        <p class="modal-tagline" id="modal-tagline">A fast-paced 2D action-platformer inspired by the golden era of
+          8-bit classics.</p>
         <p class="modal-desc" id="modal-desc">Full project description...</p>
 
         <div class="modal-specs-grid">
@@ -282,10 +299,12 @@
         </div>
 
         <div class="modal-features-box" id="modal-features-box" style="margin-bottom: 1.5rem;">
-          <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary); margin-bottom: 0.75rem;">
+          <h4
+            style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary); margin-bottom: 0.75rem;">
             Key Features
           </h4>
-          <ul class="modal-features-list" id="modal-features-list" style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+          <ul class="modal-features-list" id="modal-features-list"
+            style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
             <!-- Dynamic features -->
           </ul>
         </div>

@@ -468,6 +468,53 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
+/* Header Subscribe Button */
+.btn-nav-subscribe {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.5rem 1.15rem;
+  font-size: 0.85rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+}
+
+.btn-nav-subscribe:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.site-header.scrolled .btn-nav-subscribe {
+  background: var(--color-bg-alt);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+}
+
+.site-header.scrolled .btn-nav-subscribe:hover {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+@media (max-width: 480px) {
+  .btn-nav-subscribe span {
+    display: none;
+  }
+  .btn-nav-subscribe {
+    padding: 0.5rem 0.6rem;
+  }
+}
+
 /* ==========================================================================
    03. HERO / INICIO (ROCKSTAR GAMES IMMERSIVE FULL-BLEED SLIDER)
    ========================================================================== */
@@ -1937,6 +1984,8 @@ textarea.form-control {
   font-weight: 900;
   letter-spacing: -0.03em;
   margin-bottom: 1rem;
+  color: #FFFFFF;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .portfolio-page-desc {
@@ -2398,5 +2447,323 @@ textarea.form-control {
 
   .latest-actions .btn {
     width: 100%;
+  }
+}
+
+/* ==========================================================================
+   COMMUNITY & PARTNERS HUB (ROLES SECTION)
+   Testers, Game Devs, Gamers, Publisher / Buyer / Co-Creation
+   ========================================================================== */
+.section-hub {
+  background: linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 50%, var(--color-bg) 100%);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid var(--color-border-light);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.section-hub::before {
+  content: "";
+  position: absolute;
+  top: -150px;
+  right: -100px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(255, 85, 0, 0.08) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.section-hub::after {
+  content: "";
+  position: absolute;
+  bottom: -150px;
+  left: -100px;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(88, 101, 242, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.hub-card {
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.hub-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: transparent;
+  transition: all var(--transition-normal);
+}
+
+.hub-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Card Themes */
+.hub-card.card-testers:hover {
+  border-color: rgba(255, 85, 0, 0.4);
+}
+.hub-card.card-testers:hover::before {
+  background: linear-gradient(90deg, #FF5500, #FF8A00);
+}
+
+.hub-card.card-devs:hover {
+  border-color: rgba(88, 101, 242, 0.4);
+}
+.hub-card.card-devs:hover::before {
+  background: linear-gradient(90deg, #5865F2, #7983F5);
+}
+
+.hub-card.card-gamers:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+.hub-card.card-gamers:hover::before {
+  background: linear-gradient(90deg, #10B981, #06B6D4);
+}
+
+.hub-card.card-publishers:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+}
+.hub-card.card-publishers:hover::before {
+  background: linear-gradient(90deg, #FF5500, #8B5CF6);
+}
+
+.hub-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.hub-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-normal);
+}
+
+.hub-card:hover .hub-icon-wrapper {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.icon-testers {
+  background: rgba(255, 85, 0, 0.1);
+  color: #FF5500;
+}
+
+.icon-devs {
+  background: rgba(88, 101, 242, 0.12);
+  color: #5865F2;
+}
+
+.icon-gamers {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+}
+
+.icon-publishers {
+  background: rgba(139, 92, 246, 0.12);
+  color: #8B5CF6;
+}
+
+.hub-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.badge-testers {
+  background: rgba(255, 85, 0, 0.1);
+  color: #FF5500;
+}
+
+.badge-devs {
+  background: rgba(88, 101, 242, 0.12);
+  color: #5865F2;
+}
+
+.badge-gamers {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+}
+
+.badge-publishers {
+  background: rgba(139, 92, 246, 0.12);
+  color: #7C3AED;
+}
+
+.hub-card-content {
+  flex-grow: 1;
+  margin-bottom: 2rem;
+}
+
+.hub-card-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+  color: var(--color-text-main);
+  line-height: 1.25;
+}
+
+.hub-card-subtitle {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hub-card.card-devs .hub-card-subtitle {
+  color: #5865F2;
+}
+
+.hub-card.card-gamers .hub-card-subtitle {
+  color: #10B981;
+}
+
+.hub-card.card-publishers .hub-card-subtitle {
+  color: #8B5CF6;
+}
+
+.hub-card-desc {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+.hub-card-action {
+  margin-top: auto;
+}
+
+.btn-hub {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-heading);
+}
+
+.btn-hub-testers {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-orange-sm);
+}
+
+.btn-hub-testers:hover {
+  background: var(--color-primary-hover);
+  box-shadow: var(--shadow-orange);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-hub-devs {
+  background: #5865F2;
+  color: #FFFFFF;
+  box-shadow: 0 4px 15px rgba(88, 101, 242, 0.25);
+}
+
+.btn-hub-devs:hover {
+  background: #4752C4;
+  box-shadow: 0 8px 25px rgba(88, 101, 242, 0.4);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+.btn-hub-gamers {
+  background: #0F172A;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+}
+
+.btn-hub-gamers:hover {
+  background: #10B981;
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-hub-publishers {
+  background: #8B5CF6;
+  color: #FFFFFF;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.25);
+}
+
+.btn-hub-publishers:hover {
+  background: #7C3AED;
+  box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* Pulsing highlight for focused contact input */
+@keyframes inputPulseGlow {
+  0% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0.6); border-color: #FF5500; }
+  50% { box-shadow: 0 0 0 8px rgba(255, 85, 0, 0.25); border-color: #FF5500; }
+  100% { box-shadow: 0 0 0 0 rgba(255, 85, 0, 0); }
+}
+
+.input-pulse {
+  animation: inputPulseGlow 1.5s ease-out;
+}
+
+@media (max-width: 1100px) {
+  .hub-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .hub-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  
+  .hub-card {
+    padding: 1.75rem 1.25rem;
   }
 }

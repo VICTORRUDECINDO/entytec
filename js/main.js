@@ -11,7 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
   initPortfolioPage();
   initScrollSpy();
   initKeyboardEvents();
+  checkInitialHashOrTab();
 });
+
+function checkInitialHashOrTab() {
+  if (window.location.hash === "#subscribe" || localStorage.getItem("openTab") === "subscribe") {
+    localStorage.removeItem("openTab");
+    setTimeout(() => goToSubscribe(), 400);
+  }
+}
 
 /* ==========================================================================
    01. STICKY HEADER & SCROLL SPY
@@ -738,10 +746,32 @@ function preselectIntent(intentKey) {
 function handleContactSubmit(event) {
   event.preventDefault();
   const form = event.target;
-  const name = document.getElementById("contact-name").value;
+  const btn = form.querySelector("button[type='submit']");
+  const originalText = btn.innerHTML;
 
-  showToast(`Thank you ${name}! We have received your inquiry. We'll get back to you soon.`);
-  form.reset();
+  // Disable button and show loading
+  btn.disabled = true;
+  btn.innerHTML = `<span>SENDING...</span>`;
+
+  // ⚠️ REPLACE "YOUR_SERVICE_ID" and "YOUR_CONTACT_TEMPLATE_ID" with your EmailJS IDs
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_CONTACT_TEMPLATE_ID", {
+    from_name: document.getElementById("contact-name").value,
+    from_email: document.getElementById("contact-email").value,
+    subject: document.getElementById("contact-subject").value,
+    message: document.getElementById("contact-message").value,
+  })
+  .then(() => {
+    showToast(`Thank you! Your message has been sent successfully. We'll get back to you soon.`);
+    form.reset();
+  })
+  .catch((error) => {
+    console.error("EmailJS Error:", error);
+    showToast("Oops! Something went wrong. Please email us directly at info@entytec.com");
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  });
 }
 
 function handlePlaytesterSubmit(event) {
@@ -755,10 +785,48 @@ function handlePlaytesterSubmit(event) {
 function handleNewsletterSubmit(event, form) {
   event.preventDefault();
   const input = form.querySelector("input[type='email']");
-  if (input && input.value) {
+  if (!input || !input.value) return;
+
+  // ⚠️ REPLACE "YOUR_SERVICE_ID" and "YOUR_NEWSLETTER_TEMPLATE_ID" with your EmailJS IDs
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_NEWSLETTER_TEMPLATE_ID", {
+    from_email: input.value,
+  })
+  .then(() => {
     showToast("You have successfully subscribed to the Entytec newsletter!");
     input.value = "";
-  }
+  })
+  .catch((error) => {
+    console.error("EmailJS Error:", error);
+    showToast("Subscription failed. Please try again or email info@entytec.com");
+  });
+}
+
+function handleSubscribeSubmit(event) {
+  event.preventDefault();
+  const form = event.target;
+  const btn = form.querySelector("button[type='submit']");
+  const originalText = btn.innerHTML;
+
+  btn.disabled = true;
+  btn.innerHTML = `<span>SUBSCRIBING...</span>`;
+
+  // ⚠️ REPLACE "YOUR_SERVICE_ID" and "YOUR_SUBSCRIBE_TEMPLATE_ID" with your EmailJS IDs
+  emailjs.send("YOUR_SERVICE_ID", "YOUR_SUBSCRIBE_TEMPLATE_ID", {
+    from_name: document.getElementById("sub-name").value,
+    from_email: document.getElementById("sub-email").value,
+  })
+  .then(() => {
+    showToast(`Thank you for subscribing! We'll notify you about upcoming playtests and releases.`);
+    form.reset();
+  })
+  .catch((error) => {
+    console.error("EmailJS Error:", error);
+    showToast("Subscription failed. Please try again or email info@entytec.com");
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  });
 }
 
 /* ==========================================================================
@@ -807,11 +875,41 @@ function switchContactTab(tab) {
   });
 }
 
-function handleSubscribeSubmit(event) {
-  event.preventDefault();
-  const form = event.target;
-  const emailInput = form.querySelector("input[type='email']");
-  const email = emailInput ? emailInput.value : "";
-  showToast(`Thank you for subscribing (${email})! We'll notify you about upcoming playtests and releases.`);
-  form.reset();
+/* ==========================================================================
+   07C. COMMUNITY & HUB NAVIGATION HELPERS
+   ========================================================================== */
+function goToContactForPartnership() {
+  switchContactTab("contact");
+  const subjectSelect = document.getElementById("contact-subject");
+  if (subjectSelect) {
+    subjectSelect.value = "Collaboration / Publishing";
+  }
+  const contactSection = document.getElementById("contacto");
+  if (contactSection) {
+    contactSection.scrollIntoView({ behavior: "smooth" });
+  }
+  setTimeout(() => {
+    const nameInput = document.getElementById("contact-name");
+    if (nameInput) {
+      nameInput.focus();
+      nameInput.classList.add("input-pulse");
+      setTimeout(() => nameInput.classList.remove("input-pulse"), 1500);
+    }
+  }, 500);
+}
+
+function goToSubscribe() {
+  switchContactTab("subscribe");
+  const contactSection = document.getElementById("contacto");
+  if (contactSection) {
+    contactSection.scrollIntoView({ behavior: "smooth" });
+  }
+  setTimeout(() => {
+    const subInput = document.getElementById("sub-name") || document.getElementById("sub-email");
+    if (subInput) {
+      subInput.focus();
+      subInput.classList.add("input-pulse");
+      setTimeout(() => subInput.classList.remove("input-pulse"), 1500);
+    }
+  }, 500);
 }

@@ -14,9 +14,9 @@ const ENT_PROJECTS = [
     thumbnail: "Antrio/1.jpg",
     coverImage: "Antrio/2.jpg",
     gallery: [
-      "Antrio/3.jpg",
-      "Antrio/4.jpg",
-      "Antrio/1.jpg"
+      "Antrio/Gifs/1.gif",
+      "Antrio/Gifs/2.gif",
+      "Antrio/Gifs/3.gif"
     ],
     description: "Antrio is a high-octane 2D action-platformer paying homage to timeless 8-bit classics. Featuring razor-sharp precision controls, demanding level design, memorable boss fights, and an electrifying chiptune soundtrack.",
     features: [
@@ -26,7 +26,7 @@ const ENT_PROJECTS = [
       "Full gamepad support and Steam achievements"
     ],
     demoUrl: "https://entytec.itch.io/antrio-demo",
-    steamUrl: "https://store.steampowered.com",
+    steamUrl: "https://store.steampowered.com/app/2012950/Antrio/",
     itchUrl: "https://entytec.itch.io/antrio-demo",
     badgeColor: "orange",
     isMain: true
@@ -92,9 +92,9 @@ const ENT_PROJECTS = [
     status: "Available on itch.io",
     releaseYear: "2024",
     engine: "Unity 3D",
-    thumbnail: "https://img.itch.zone/aW1nLzI3ODk0Njk0LnBuZw==/315x250%23c/ceUjtL.png",
-    coverImage: "https://img.itch.zone/aW1nLzI3ODk0Njk0LnBuZw==/315x250%23c/ceUjtL.png",
-    gallery: ["https://img.itch.zone/aW1nLzI3ODk0Njk0LnBuZw==/315x250%23c/ceUjtL.png"],
+    thumbnail: "Otros proyectos/your-turn.png",
+    coverImage: "Otros proyectos/your-turn.png",
+    gallery: ["Otros proyectos/your-turn.png"],
     description: "A dynamic and challenging arcade game tailored for quick, addictive sessions directly in the browser. Test your timing and agility across increasingly difficult obstacles.",
     features: ["Simple one-touch controls", "Responsive browser performance", "Instant replayability"],
     demoUrl: "https://entytec.itch.io/your-turn",
@@ -111,9 +111,9 @@ const ENT_PROJECTS = [
     status: "Available on itch.io",
     releaseYear: "2023",
     engine: "Unity 3D",
-    thumbnail: "https://img.itch.zone/aW1nLzE5NzgwOTkwLnBuZw==/315x250%23c/VKZ%2BK0.png",
-    coverImage: "https://img.itch.zone/aW1nLzE5NzgwOTkwLnBuZw==/315x250%23c/VKZ%2BK0.png",
-    gallery: ["https://img.itch.zone/aW1nLzE5NzgwOTkwLnBuZw==/315x250%23c/VKZ%2BK0.png"],
+    thumbnail: "Otros proyectos/bubble-effect.png",
+    coverImage: "Otros proyectos/bubble-effect.png",
+    gallery: ["Otros proyectos/bubble-effect.png"],
     description: "A colorful puzzle game focused on timing, angle calculation, and satisfying chain reactions. Trigger cascaded explosions to clear levels and set high scores.",
     features: ["Dynamic chain reactions", "Energetic soundtrack", "Easy to learn, hard to master"],
     demoUrl: "https://entytec.itch.io/bubble-effect",
