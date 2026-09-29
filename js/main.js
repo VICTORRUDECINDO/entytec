@@ -3,7 +3,38 @@
  * Interactions, Hero Slider, Filtering, Modals, Forms & UX Polish
  */
 
+/* ==========================================================================
+   EMAILJS CONFIGURATION
+   ========================================================================== */
+const EMAILJS_CONFIG = {
+  PUBLIC_KEY: "BISgrx9Em1Ja8r6LK",
+  SERVICE_ID: "service_d043mt3",
+  CONTACT_TEMPLATE_ID: "template_u139egk",
+  SUBSCRIBE_TEMPLATE_ID: "template_u139egk",
+  NEWSLETTER_TEMPLATE_ID: "template_u139egk"
+};
+
+/* ==========================================================================
+   GOOGLE SHEETS (SUBSCRIPTION / LEADS DATABASE)
+   Guarda automáticamente Gamertag + Email en tu documento de Google Sheets
+   ========================================================================== */
+const GOOGLE_SHEETS_CONFIG = {
+  WEBAPP_URL: "https://script.google.com/macros/s/AKfycbwe_iPJsnTR1ZnT5v0pMgrLqPqnD2ZvyGSxToN59F6dgL4TApQgqQtXY4wQ5S63w5x2IQ/exec"
+};
+
+function initEmailJS() {
+  if (typeof emailjs !== "undefined" && EMAILJS_CONFIG.PUBLIC_KEY) {
+    try {
+      emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+      console.log("EmailJS initialized with public key.");
+    } catch (err) {
+      console.error("EmailJS init failed:", err);
+    }
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  initEmailJS();
   initStickyHeader();
   initMobileMenu();
   initHeroCarousel();
@@ -15,9 +46,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function checkInitialHashOrTab() {
-  if (window.location.hash === "#subscribe" || localStorage.getItem("openTab") === "subscribe") {
+  const hash = window.location.hash;
+  const storedTab = localStorage.getItem("openTab");
+
+  if (hash === "#subscribe" || storedTab === "subscribe") {
     localStorage.removeItem("openTab");
     setTimeout(() => goToSubscribe(), 400);
+  } else if (hash === "#contacto" || storedTab === "contact") {
+    localStorage.removeItem("openTab");
+    setTimeout(() => goToContact(), 400);
   }
 }
 
@@ -749,56 +786,138 @@ function handleContactSubmit(event) {
   const btn = form.querySelector("button[type='submit']");
   const originalText = btn.innerHTML;
 
-  // Disable button and show loading
+  const nameInput = document.getElementById("contact-name");
+  const emailInput = document.getElementById("contact-email");
+  const subjectInput = document.getElementById("contact-subject");
+  const messageInput = document.getElementById("contact-message");
+  const intentInput = document.getElementById("selected-intent");
+
+  const name = nameInput ? nameInput.value.trim() : "";
+  const email = emailInput ? emailInput.value.trim() : "";
+  const subject = subjectInput ? subjectInput.value.trim() : "General Inquiry";
+  const message = messageInput ? messageInput.value.trim() : "";
+  const intent = intentInput ? intentInput.value : "Contact";
+
+  if (!name || !email || !message) {
+    showToast("Please fill in all required fields.");
+    return;
+  }
+
+  // Disable button and show loading state
   btn.disabled = true;
   btn.innerHTML = `<span>SENDING...</span>`;
 
-  // ⚠️ REPLACE "YOUR_SERVICE_ID" and "YOUR_CONTACT_TEMPLATE_ID" with your EmailJS IDs
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_CONTACT_TEMPLATE_ID", {
-    from_name: document.getElementById("contact-name").value,
-    from_email: document.getElementById("contact-email").value,
-    subject: document.getElementById("contact-subject").value,
-    message: document.getElementById("contact-message").value,
-  })
-  .then(() => {
-    showToast(`Thank you! Your message has been sent successfully. We'll get back to you soon.`);
-    form.reset();
-  })
-  .catch((error) => {
-    console.error("EmailJS Error:", error);
-    showToast("Oops! Something went wrong. Please email us directly at info@entytec.com");
-  })
-  .finally(() => {
-    btn.disabled = false;
-    btn.innerHTML = originalText;
-  });
+  // Always ensure initialized before sending
+  if (typeof emailjs !== "undefined" && EMAILJS_CONFIG.PUBLIC_KEY) {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+  }
+
+  // Parameters mapped to match all common EmailJS variable names
+  const templateParams = {
+    name: name,
+    from_name: name,
+    email: email,
+    from_email: email,
+    reply_to: email,
+    to_email: "info@entytec.com",
+    subject: subject,
+    message: message,
+    intent: intent,
+    date: new Date().toLocaleString()
+  };
+
+  emailjs
+    .send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.CONTACT_TEMPLATE_ID, templateParams)
+    .then(() => {
+      showToast("Thank you! Your message has been sent successfully. We'll get back to you soon.");
+      form.reset();
+    })
+    .catch((error) => {
+      console.error("EmailJS Error:", error);
+      showToast("Oops! Something went wrong. Please email us directly at info@entytec.com");
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    });
 }
 
 function handlePlaytesterSubmit(event) {
   event.preventDefault();
-  const name = document.getElementById("pt-name").value;
+  const name = document.getElementById("pt-name").value.trim();
+  const email = document.getElementById("pt-email").value.trim();
+
+  // Collect checked platforms
+  const checkedBoxes = Array.from(event.target.querySelectorAll("input[type='checkbox']:checked"));
+  const platforms = checkedBoxes.map((cb) => cb.parentElement.textContent.trim()).join(", ") || "PC / Steam";
+
   closeModal("playtester-modal");
-  showToast(`Welcome to the Playtester team, ${name}! We've sent you a confirmation email.`);
+  showToast(`Welcome to the Playtester team, ${name}! We've registered your interest.`);
+
+  if (typeof emailjs !== "undefined" && EMAILJS_CONFIG.PUBLIC_KEY) {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.CONTACT_TEMPLATE_ID, {
+      name: name,
+      from_name: name,
+      email: email,
+      from_email: email,
+      reply_to: email,
+      to_email: "info@entytec.com",
+      subject: "🎮 New Playtester Registration",
+      message: `New playtester signed up!\nName: ${name}\nEmail: ${email}\nPlatforms: ${platforms}`,
+      intent: "Playtester Signup",
+      date: new Date().toLocaleString()
+    }).catch((err) => console.error("Playtester EmailJS Error:", err));
+  }
+
   event.target.reset();
 }
 
 function handleNewsletterSubmit(event, form) {
   event.preventDefault();
   const input = form.querySelector("input[type='email']");
-  if (!input || !input.value) return;
+  if (!input || !input.value.trim()) return;
 
-  // ⚠️ REPLACE "YOUR_SERVICE_ID" and "YOUR_NEWSLETTER_TEMPLATE_ID" with your EmailJS IDs
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_NEWSLETTER_TEMPLATE_ID", {
-    from_email: input.value,
-  })
-  .then(() => {
+  const emailVal = input.value.trim();
+
+  // Guardar en Google Sheets automáticamente
+  if (GOOGLE_SHEETS_CONFIG.WEBAPP_URL && !GOOGLE_SHEETS_CONFIG.WEBAPP_URL.includes("TU_GOOGLE_")) {
+    const payload = new URLSearchParams();
+    payload.append("name", "Newsletter Subscriber");
+    payload.append("email", emailVal);
+    payload.append("date", new Date().toLocaleString());
+
+    fetch(GOOGLE_SHEETS_CONFIG.WEBAPP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload
+    }).catch((err) => console.error("Google Sheets Error:", err));
+  }
+
+  if (typeof emailjs !== "undefined" && EMAILJS_CONFIG.PUBLIC_KEY) {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.NEWSLETTER_TEMPLATE_ID, {
+      email: emailVal,
+      from_email: emailVal,
+      reply_to: emailVal,
+      subject: "📬 Newsletter Subscription",
+      message: `New newsletter subscription: ${emailVal}`,
+      intent: "Newsletter",
+      date: new Date().toLocaleString()
+    })
+      .then(() => {
+        showToast("You have successfully subscribed to the Entytec newsletter!");
+        input.value = "";
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        showToast("Subscription failed. Please try again or email info@entytec.com");
+      });
+  } else {
     showToast("You have successfully subscribed to the Entytec newsletter!");
     input.value = "";
-  })
-  .catch((error) => {
-    console.error("EmailJS Error:", error);
-    showToast("Subscription failed. Please try again or email info@entytec.com");
-  });
+  }
 }
 
 function handleSubscribeSubmit(event) {
@@ -807,26 +926,61 @@ function handleSubscribeSubmit(event) {
   const btn = form.querySelector("button[type='submit']");
   const originalText = btn.innerHTML;
 
+  const nameVal = document.getElementById("sub-name").value.trim();
+  const emailVal = document.getElementById("sub-email").value.trim();
+
   btn.disabled = true;
   btn.innerHTML = `<span>SUBSCRIBING...</span>`;
 
-  // ⚠️ REPLACE "YOUR_SERVICE_ID" and "YOUR_SUBSCRIBE_TEMPLATE_ID" with your EmailJS IDs
-  emailjs.send("YOUR_SERVICE_ID", "YOUR_SUBSCRIBE_TEMPLATE_ID", {
-    from_name: document.getElementById("sub-name").value,
-    from_email: document.getElementById("sub-email").value,
-  })
-  .then(() => {
+  // 1. Guardar en Google Sheets automáticamente
+  if (GOOGLE_SHEETS_CONFIG.WEBAPP_URL && !GOOGLE_SHEETS_CONFIG.WEBAPP_URL.includes("TU_GOOGLE_")) {
+    const payload = new URLSearchParams();
+    payload.append("name", nameVal);
+    payload.append("email", emailVal);
+    payload.append("date", new Date().toLocaleString());
+
+    fetch(GOOGLE_SHEETS_CONFIG.WEBAPP_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: payload
+    }).catch((err) => console.error("Google Sheets Error:", err));
+  }
+
+  // 2. Notificación EmailJS
+  if (typeof emailjs !== "undefined" && EMAILJS_CONFIG.PUBLIC_KEY) {
+    emailjs.init(EMAILJS_CONFIG.PUBLIC_KEY);
+    emailjs.send(EMAILJS_CONFIG.SERVICE_ID, EMAILJS_CONFIG.SUBSCRIBE_TEMPLATE_ID, {
+      name: nameVal,
+      from_name: nameVal,
+      email: emailVal,
+      from_email: emailVal,
+      reply_to: emailVal,
+      to_email: "info@entytec.com",
+      subject: "📬 Community Subscription",
+      message: `New community subscription:\nName: ${nameVal}\nEmail: ${emailVal}`,
+      intent: "Subscribe",
+      date: new Date().toLocaleString()
+    })
+      .then(() => {
+        showToast(`Thank you for subscribing! We'll notify you about upcoming playtests and releases.`);
+        form.reset();
+      })
+      .catch((error) => {
+        console.error("EmailJS Error:", error);
+        showToast(`Thank you for subscribing! We'll notify you about upcoming playtests and releases.`);
+        form.reset();
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+      });
+  } else {
     showToast(`Thank you for subscribing! We'll notify you about upcoming playtests and releases.`);
     form.reset();
-  })
-  .catch((error) => {
-    console.error("EmailJS Error:", error);
-    showToast("Subscription failed. Please try again or email info@entytec.com");
-  })
-  .finally(() => {
     btn.disabled = false;
     btn.innerHTML = originalText;
-  });
+  }
 }
 
 /* ==========================================================================
@@ -878,16 +1032,34 @@ function switchContactTab(tab) {
 /* ==========================================================================
    07C. COMMUNITY & HUB NAVIGATION HELPERS
    ========================================================================== */
-function goToContactForPartnership() {
-  switchContactTab("contact");
-  const subjectSelect = document.getElementById("contact-subject");
-  if (subjectSelect) {
-    subjectSelect.value = "Collaboration / Publishing";
-  }
+function goToContact(intent = null) {
   const contactSection = document.getElementById("contacto");
-  if (contactSection) {
-    contactSection.scrollIntoView({ behavior: "smooth" });
+  if (!contactSection) {
+    localStorage.setItem("openTab", "contact");
+    window.location.href = "index.html#contacto";
+    return;
   }
+
+  switchContactTab("contact");
+
+  if (intent) {
+    const subjectSelect = document.getElementById("contact-subject");
+    if (subjectSelect) subjectSelect.value = intent;
+  }
+
+  // Close mobile navigation menu if open
+  const navMenu = document.getElementById("nav-menu");
+  const mobileToggle = document.getElementById("mobile-toggle");
+  if (navMenu && navMenu.classList.contains("open")) {
+    navMenu.classList.remove("open");
+    if (mobileToggle) {
+      mobileToggle.classList.remove("is-active");
+      mobileToggle.setAttribute("aria-expanded", "false");
+    }
+  }
+
+  contactSection.scrollIntoView({ behavior: "smooth" });
+
   setTimeout(() => {
     const nameInput = document.getElementById("contact-name");
     if (nameInput) {
@@ -895,11 +1067,27 @@ function goToContactForPartnership() {
       nameInput.classList.add("input-pulse");
       setTimeout(() => nameInput.classList.remove("input-pulse"), 1500);
     }
-  }, 500);
+  }, 400);
+}
+
+function goToContactForPartnership() {
+  goToContact("Collaboration / Publishing");
 }
 
 function goToSubscribe() {
   switchContactTab("subscribe");
+
+  // Close mobile navigation menu if open
+  const navMenu = document.getElementById("nav-menu");
+  const mobileToggle = document.getElementById("mobile-toggle");
+  if (navMenu && navMenu.classList.contains("open")) {
+    navMenu.classList.remove("open");
+    if (mobileToggle) {
+      mobileToggle.classList.remove("is-active");
+      mobileToggle.setAttribute("aria-expanded", "false");
+    }
+  }
+
   const contactSection = document.getElementById("contacto");
   if (contactSection) {
     contactSection.scrollIntoView({ behavior: "smooth" });
@@ -911,5 +1099,5 @@ function goToSubscribe() {
       subInput.classList.add("input-pulse");
       setTimeout(() => subInput.classList.remove("input-pulse"), 1500);
     }
-  }, 500);
+  }, 400);
 }
