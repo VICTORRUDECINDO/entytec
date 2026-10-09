@@ -43,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollSpy();
   initKeyboardEvents();
   checkInitialHashOrTab();
+  initMobileCarousels();
+  initMobileHeroGifs();
 });
 
 function checkInitialHashOrTab() {
@@ -1100,4 +1102,254 @@ function goToSubscribe() {
       setTimeout(() => subInput.classList.remove("input-pulse"), 1500);
     }
   }, 400);
+}
+
+/* ==========================================================================
+   09. MOBILE CAROUSELS — Portfolio & Community Hub
+   ========================================================================== */
+function initMobileCarousels() {
+  const isMobile = () => window.innerWidth <= 768;
+
+  // ---- Portfolio Carousel ----
+  function buildPortfolioCarousel() {
+    const track = document.getElementById("portfolio-carousel-track");
+    const dotsContainer = document.getElementById("portfolio-carousel-dots");
+    const prevBtn = document.getElementById("portfolio-carousel-prev");
+    const nextBtn = document.getElementById("portfolio-carousel-next");
+    const sourceGrid = document.getElementById("portfolio-grid");
+    if (!track || !sourceGrid) return;
+
+    track.innerHTML = "";
+    if (dotsContainer) dotsContainer.innerHTML = "";
+
+    const cards = Array.from(sourceGrid.querySelectorAll(".portfolio-card-visual"));
+    if (!cards.length) return;
+
+    cards.forEach((card, i) => {
+      const clone = card.cloneNode(true);
+      // Re-attach onclick handlers via attribute (cloneNode preserves attribute onclick)
+      track.appendChild(clone);
+
+      if (dotsContainer) {
+        const dot = document.createElement("button");
+        dot.className = "carousel-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", "Game " + (i + 1));
+        dot.addEventListener("click", () => scrollCarouselTo(track, i, cards.length, dotsContainer));
+        dotsContainer.appendChild(dot);
+      }
+    });
+
+    let currentIndex = 0;
+    const scrollTo = (idx) => {
+      currentIndex = Math.max(0, Math.min(idx, cards.length - 1));
+      scrollCarouselTo(track, currentIndex, cards.length, dotsContainer);
+    };
+    if (prevBtn) prevBtn.addEventListener("click", () => scrollTo(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => scrollTo(currentIndex + 1));
+
+    track.addEventListener("scroll", () => {
+      const children = track.children;
+      if (!children.length) return;
+      const itemWidth = children[0].offsetWidth + 16; // 16 = 1rem gap
+      const newIdx = Math.round(track.scrollLeft / itemWidth);
+      if (newIdx !== currentIndex) {
+        currentIndex = newIdx;
+        updateCarouselDots(dotsContainer, currentIndex);
+      }
+    }, { passive: true });
+  }
+
+  // ---- Community Hub Carousel ----
+  function buildHubCarousel() {
+    const track = document.getElementById("hub-carousel-track");
+    const dotsContainer = document.getElementById("hub-carousel-dots");
+    const prevBtn = document.getElementById("hub-carousel-prev");
+    const nextBtn = document.getElementById("hub-carousel-next");
+    const sourceGrid = document.getElementById("hub-grid");
+    if (!track || !sourceGrid) return;
+
+    track.innerHTML = "";
+    if (dotsContainer) dotsContainer.innerHTML = "";
+
+    const cards = Array.from(sourceGrid.querySelectorAll(".hub-card"));
+    if (!cards.length) return;
+
+    cards.forEach((card, i) => {
+      const clone = card.cloneNode(true);
+      track.appendChild(clone);
+
+      if (dotsContainer) {
+        const dot = document.createElement("button");
+        dot.className = "carousel-dot" + (i === 0 ? " active" : "");
+        dot.setAttribute("aria-label", "Card " + (i + 1));
+        dot.addEventListener("click", () => scrollCarouselTo(track, i, cards.length, dotsContainer));
+        dotsContainer.appendChild(dot);
+      }
+    });
+
+    let currentIndex = 0;
+    const scrollTo = (idx) => {
+      currentIndex = Math.max(0, Math.min(idx, cards.length - 1));
+      scrollCarouselTo(track, currentIndex, cards.length, dotsContainer);
+    };
+    if (prevBtn) prevBtn.addEventListener("click", () => scrollTo(currentIndex - 1));
+    if (nextBtn) nextBtn.addEventListener("click", () => scrollTo(currentIndex + 1));
+
+    track.addEventListener("scroll", () => {
+      const children = track.children;
+      if (!children.length) return;
+      const itemWidth = children[0].offsetWidth + 16;
+      const newIdx = Math.round(track.scrollLeft / itemWidth);
+      if (newIdx !== currentIndex) {
+        currentIndex = newIdx;
+        updateCarouselDots(dotsContainer, currentIndex);
+      }
+    }, { passive: true });
+  }
+
+  // ---- Helpers ----
+  function scrollCarouselTo(track, index, total, dotsContainer) {
+    const children = track.children;
+    if (!children.length) return;
+    const itemWidth = children[0].offsetWidth + 16;
+    track.scrollTo({ left: itemWidth * index, behavior: "smooth" });
+    updateCarouselDots(dotsContainer, index);
+  }
+
+  function updateCarouselDots(dotsContainer, activeIndex) {
+    if (!dotsContainer) return;
+    Array.from(dotsContainer.children).forEach((dot, i) => {
+      dot.classList.toggle("active", i === activeIndex);
+    });
+  }
+
+  // ---- Init & responsive rebuild ----
+  function initAll() {
+    if (isMobile()) {
+      buildPortfolioCarousel();
+      buildHubCarousel();
+    }
+  }
+
+  requestAnimationFrame(() => {
+    initAll();
+  });
+
+  // Rebuild if window resizes across the breakpoint
+  let wasMobile = isMobile();
+  window.addEventListener("resize", () => {
+    const nowMobile = isMobile();
+    if (nowMobile !== wasMobile) {
+      wasMobile = nowMobile;
+      if (nowMobile) initAll();
+    }
+  });
+}
+
+/* ==========================================================================
+   10. MOBILE HERO GIFS (Antrio 3-GIF Gameplay Loop on Mobile)
+   ========================================================================== */
+function initMobileHeroGifs() {
+  const container = document.getElementById("hero-mobile-gifs");
+  const dotsContainer = document.getElementById("hero-mobile-dots");
+  if (!container) return;
+
+  const gifs = container.querySelectorAll(".hero-mobile-gif");
+  const dots = dotsContainer ? dotsContainer.querySelectorAll(".mobile-dot") : [];
+  if (!gifs.length) return;
+
+  let currentGifIndex = 0;
+  let gifInterval = null;
+  const GIF_INTERVAL_MS = 4000; // 4 seconds per gameplay clip
+
+  const isMobile = () => window.innerWidth <= 768;
+
+  const showGif = (index) => {
+    currentGifIndex = (index + gifs.length) % gifs.length;
+    gifs.forEach((gif, i) => {
+      gif.classList.toggle("active", i === currentGifIndex);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentGifIndex);
+    });
+  };
+
+  const nextGif = () => {
+    showGif(currentGifIndex + 1);
+  };
+
+  const prevGif = () => {
+    showGif(currentGifIndex - 1);
+  };
+
+  const startLoop = () => {
+    stopLoop();
+    if (isMobile()) {
+      gifInterval = setInterval(nextGif, GIF_INTERVAL_MS);
+    }
+  };
+
+  const stopLoop = () => {
+    if (gifInterval) {
+      clearInterval(gifInterval);
+      gifInterval = null;
+    }
+  };
+
+  // Dots click events
+  dots.forEach((dot, idx) => {
+    dot.addEventListener("click", (e) => {
+      e.stopPropagation();
+      showGif(idx);
+      startLoop();
+    });
+  });
+
+  // Touch swipe support on the hero section for mobile
+  const heroSection = document.getElementById("inicio");
+  if (heroSection) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    heroSection.addEventListener("touchstart", (e) => {
+      if (!isMobile()) return;
+      if (e.target.closest("button") || e.target.closest("a")) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      stopLoop();
+    }, { passive: true });
+
+    heroSection.addEventListener("touchend", (e) => {
+      if (!isMobile()) return;
+      if (e.target.closest("button") || e.target.closest("a")) return;
+      const touchEndX = e.changedTouches[0].clientX;
+      const touchEndY = e.changedTouches[0].clientY;
+      const diffX = touchEndX - touchStartX;
+      const diffY = touchEndY - touchStartY;
+
+      if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
+        if (diffX < 0) {
+          nextGif();
+        } else {
+          prevGif();
+        }
+      }
+      startLoop();
+    }, { passive: true });
+  }
+
+  // Handle window resizing
+  window.addEventListener("resize", () => {
+    if (isMobile()) {
+      if (!gifInterval) startLoop();
+    } else {
+      stopLoop();
+    }
+  });
+
+  // Initial startup
+  if (isMobile()) {
+    showGif(0);
+    startLoop();
+  }
 }

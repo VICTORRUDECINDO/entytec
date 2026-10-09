@@ -584,8 +584,19 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform 10s ease-out;
 }
 
-.hero-slide.active .hero-bg-img {
+.hero-slide.active .hero-bg-desktop {
   transform: scale(1.06);
+}
+
+/* Default / Desktop display rules */
+.hero-bg-desktop {
+  display: block;
+}
+
+.hero-mobile-gifs,
+.hero-mobile-dots,
+.mobile-live-badge {
+  display: none;
 }
 
 /* Rockstar Cinematic Vignette & Bottom Gradient Overlay */
@@ -2767,3 +2778,338 @@ textarea.form-control {
     padding: 1.75rem 1.25rem;
   }
 }
+
+/* ==========================================================================
+   MOBILE CAROUSEL — Portfolio & Community sections
+   ========================================================================== */
+
+/* Carousel Wrapper */
+.mobile-carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  margin: 0 -1.5rem; /* bleed to edge */
+  padding: 0;
+}
+
+.mobile-carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 1.5rem 1rem;
+  cursor: grab;
+  transition: scroll 0.3s ease;
+}
+
+.mobile-carousel-track:active {
+  cursor: grabbing;
+}
+
+.mobile-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-carousel-track > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+  width: 80vw;
+  max-width: 320px;
+}
+
+/* Carousel Navigation */
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--color-primary);
+}
+
+.carousel-nav-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1.5px solid var(--color-border);
+  color: var(--color-text-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.carousel-nav-btn:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Section hub carousel variant */
+.hub-carousel .mobile-carousel-track > * {
+  width: 78vw;
+  max-width: 300px;
+}
+
+/* ==========================================================================
+   MOBILE HERO — Full-bleed image, compact text, clean CTA
+   ========================================================================== */
+@media (max-width: 768px) {
+
+  /* Hero: fill entire viewport, focus image, minimal overlay */
+  .hero-rockstar {
+    justify-content: flex-end;
+  }
+
+  /* On mobile: Hide static wallpaper, display 3-GIF player */
+  .hero-bg-desktop {
+    display: none !important;
+  }
+
+  .hero-mobile-gifs {
+    display: block !important;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .hero-mobile-gif {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: none !important;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-mobile-gif.active {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  /* Live Gameplay Pulse Badge */
+  .mobile-live-badge {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 85, 0, 0.22);
+    border: 1px solid rgba(255, 85, 0, 0.55);
+    color: #FFAA80;
+    font-size: 0.72rem;
+    padding: 0.22rem 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    backdrop-filter: blur(8px);
+  }
+
+  .live-pulse {
+    width: 6px;
+    height: 6px;
+    background: #FF5500;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #FF5500;
+    animation: livePulseAnim 1.4s ease-in-out infinite;
+  }
+
+  @keyframes livePulseAnim {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.7); }
+  }
+
+  /* Mobile GIF Dots Indicator */
+  .hero-mobile-dots {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.9rem;
+  }
+
+  .mobile-dot {
+    width: 22px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .mobile-dot.active {
+    width: 44px;
+    background: var(--color-primary);
+    box-shadow: 0 0 10px rgba(255, 85, 0, 0.7);
+  }
+
+  /* On mobile use center-center for the game image */
+  .hero-bg-img {
+    object-position: center center;
+  }
+
+  /* Simplify gradient for mobile: stronger bottom fade, lighter left shadow */
+  .hero-gradient-overlay {
+    background:
+      /* Top Header Darkener — keep nav readable */
+      linear-gradient(180deg, rgba(7, 11, 20, 0.6) 0%, transparent 30%),
+      /* Bottom Deep Gradient for CTA area */
+      linear-gradient(0deg, #070B14 0%, rgba(7, 11, 20, 0.92) 22%, rgba(7, 11, 20, 0.4) 50%, transparent 75%);
+  }
+
+  /* Content: compact bottom strip */
+  .hero-slide-content {
+    padding-bottom: 4.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%;
+  }
+
+  /* Hide verbose paragraph on mobile — image speaks for itself */
+  .hero-main-desc {
+    display: none;
+  }
+
+  /* Compact title on mobile */
+  .hero-main-title {
+    font-size: clamp(2rem, 9vw, 3rem);
+    margin-bottom: 0.75rem;
+  }
+
+  /* Badge row — keep small */
+  .hero-badge-row {
+    margin-bottom: 0.85rem;
+  }
+
+  /* Actions row: stack buttons vertically, full-width */
+  .hero-actions-row {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    width: 100%;
+  }
+
+  .hero-actions-row .btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+    min-width: 0;
+  }
+
+  /* Keep bottom bar controls visible but compact */
+  .hero-bottom-bar {
+    bottom: 1rem;
+  }
+
+  /* Portfolio grid → carousel on mobile */
+  .portfolio-grid {
+    display: none !important; /* replaced by mobile-carousel-track */
+  }
+
+  .portfolio-carousel-mobile {
+    display: block;
+  }
+
+  /* Community hub grid → carousel on mobile */
+  .hub-grid {
+    display: none !important;
+  }
+
+  .hub-carousel-mobile {
+    display: block;
+  }
+
+  /* Carousel card sizing for portfolio */
+  .portfolio-carousel-mobile .mobile-carousel-track > * {
+    width: 72vw;
+    max-width: 280px;
+    aspect-ratio: 16 / 11;
+    min-height: 0;
+  }
+
+  /* Hub carousel card sizing */
+  .hub-carousel-mobile .mobile-carousel-track > * {
+    width: 80vw;
+    max-width: 300px;
+  }
+
+  /* Show only first hub card fully, peek second */
+  .hub-carousel-mobile .hub-card {
+    height: 100%;
+  }
+}
+
+/* On desktop: hide mobile-only carousels */
+@media (min-width: 769px) {
+  .portfolio-carousel-mobile,
+  .hub-carousel-mobile {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   HERO EXTRA SMALL — phones < 480px
+   ========================================================================== */
+@media (max-width: 480px) {
+  .hero-main-title {
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+
+  .hero-actions-row .btn-lg {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .hero-actions-row {
+    gap: 0.5rem;
+  }
+
+  /* hide Steam/secondary button text on very small screens */
+  .hero-actions-row .btn-glass span,
+  .hero-actions-row .btn-glass svg {
+    /* keep icon but trim padding */
+  }
+
+  .hero-slide-content {
+    padding-bottom: 4rem;
+  }
+
+  .hero-bottom-bar {
+    bottom: 0.6rem;
+  }
+}
+
