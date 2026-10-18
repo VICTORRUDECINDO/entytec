@@ -19,3 +19,9 @@ package-lock.json
 
 # Vercel
 .vercel/
+
+# Environment Variables & Secrets
+.env
+.env*.local
+.env.production
+.env.development

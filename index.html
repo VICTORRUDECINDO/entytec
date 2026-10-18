@@ -654,6 +654,12 @@
             <!-- Pane: Contacto (4 essential fields) -->
             <div class="contact-pane active" id="pane-contact">
               <form id="contact-form" onsubmit="handleContactSubmit(event)">
+                <!-- Anti-spam Honeypot & Timestamp protection (invisible to humans, traps bots) -->
+                <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" aria-hidden="true" tabindex="-1">
+                  <input type="text" name="_hp_security_check" class="hp-trap-input" autocomplete="off" tabindex="-1">
+                </div>
+                <input type="hidden" name="_form_ts" class="form-ts-input" value="">
+
                 <div class="form-grid">
                   <div class="form-group">
                     <label for="contact-name">Name *</label>
@@ -700,6 +706,12 @@
                 </p>
               </div>
               <form class="subscribe-simple-form" id="subscribe-form" onsubmit="handleSubscribeSubmit(event)">
+                <!-- Anti-spam Honeypot & Timestamp protection (invisible to humans, traps bots) -->
+                <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" aria-hidden="true" tabindex="-1">
+                  <input type="text" name="_hp_security_check" class="hp-trap-input" autocomplete="off" tabindex="-1">
+                </div>
+                <input type="hidden" name="_form_ts" class="form-ts-input" value="">
+
                 <div class="form-group">
                   <label for="sub-name">Name / Gamer Tag *</label>
                   <input type="text" id="sub-name" class="form-control" placeholder="e.g. GamerPro88" required>
@@ -903,6 +915,12 @@
         </div>
 
         <form onsubmit="handlePlaytesterSubmit(event)">
+          <!-- Anti-spam Honeypot & Timestamp protection (invisible to humans, traps bots) -->
+          <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" aria-hidden="true" tabindex="-1">
+            <input type="text" name="_hp_security_check" class="hp-trap-input" autocomplete="off" tabindex="-1">
+          </div>
+          <input type="hidden" name="_form_ts" class="form-ts-input" value="">
+
           <div class="form-group" style="margin-bottom: 1rem;">
             <label for="pt-name">Name / Gamer Tag *</label>
             <input type="text" id="pt-name" class="form-control" placeholder="e.g. GamerPro88" required>
@@ -942,7 +960,7 @@
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- EmailJS SDK -->
+  <!-- EmailJS Browser Engine -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <!-- JavaScript Modules -->

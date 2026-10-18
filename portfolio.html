@@ -266,6 +266,12 @@
           <h4 class="footer-title">Newsletter</h4>
           <p>Stay up to date with our devlogs, betas, and upcoming launches.</p>
           <form class="newsletter-mini-form" onsubmit="handleNewsletterSubmit(event, this)">
+            <!-- Anti-spam Honeypot & Timestamp protection (invisible to humans, traps bots) -->
+            <div style="position: absolute; left: -9999px; top: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none;" aria-hidden="true" tabindex="-1">
+              <input type="text" name="_hp_security_check" class="hp-trap-input" autocomplete="off" tabindex="-1">
+            </div>
+            <input type="hidden" name="_form_ts" class="form-ts-input" value="">
+
             <input type="email" placeholder="Email..." class="newsletter-mini-input"
               style="background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.15);" required>
             <button type="submit" class="btn btn-primary btn-sm">OK</button>
@@ -347,7 +353,7 @@
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- EmailJS SDK -->
+  <!-- EmailJS Browser Engine -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <!-- JavaScript Modules -->
