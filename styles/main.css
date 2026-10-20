@@ -1821,23 +1821,85 @@ textarea.form-control {
 }
 
 .toast {
+  pointer-events: auto;
   background: var(--color-bg-dark);
   color: #FFFFFF;
-  padding: 1rem 1.5rem;
+  padding: 1.1rem 1.6rem;
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-lg);
-  border-left: 4px solid var(--color-primary);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.55);
+  border-left: 5px solid var(--color-primary);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   transform: translateX(120%);
-  transition: transform var(--transition-normal);
-  font-size: 0.9rem;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+  font-size: 0.95rem;
   font-weight: 600;
+  max-width: 440px;
+  line-height: 1.45;
+  z-index: 3001;
 }
 
 .toast.show {
   transform: translateX(0);
+}
+
+/* Success Toast - Clear vibrant Green */
+.toast.toast-success {
+  border-left: 5px solid #10B981 !important;
+  background: #064E3B !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.28) 0%, rgba(6, 78, 59, 0.98) 100%) !important;
+  border: 1px solid rgba(16, 185, 129, 0.4) !important;
+  border-left: 5px solid #10B981 !important;
+  color: #ECFDF5 !important;
+  box-shadow: 0 14px 35px rgba(16, 185, 129, 0.3), var(--shadow-lg) !important;
+}
+
+.toast.toast-success .toast-message {
+  color: #FFFFFF !important;
+  font-weight: 600;
+}
+
+/* Error Toast - Clear vibrant Red */
+.toast.toast-error {
+  border-left: 5px solid #EF4444 !important;
+  background: #7F1D1D !important;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3) 0%, rgba(127, 29, 29, 0.98) 100%) !important;
+  border: 1px solid rgba(239, 68, 68, 0.4) !important;
+  border-left: 5px solid #EF4444 !important;
+  color: #FEF2F2 !important;
+  box-shadow: 0 14px 35px rgba(239, 68, 68, 0.3), var(--shadow-lg) !important;
+}
+
+.toast.toast-error .toast-message {
+  color: #FFFFFF !important;
+  font-weight: 600;
+}
+
+/* Inline feedback banner for form status */
+.form-feedback-msg {
+  display: none;
+  margin-top: 1.25rem;
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  animation: fadeIn 0.3s ease;
+}
+
+.form-feedback-msg.feedback-success {
+  display: block;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid #10B981;
+  color: #10B981;
+}
+
+.form-feedback-msg.feedback-error {
+  display: block;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #EF4444;
+  color: #EF4444;
 }
 
 /* ==========================================================================

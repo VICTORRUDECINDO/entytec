@@ -599,7 +599,11 @@ function openProjectModal(projectId) {
   if (desc) desc.textContent = project.description;
   if (platform) platform.textContent = project.platform;
   if (engine) engine.textContent = project.engine;
-  if (year) year.textContent = project.releaseYear;
+  if (year) {
+    year.textContent = (project.id === "antrio" || !project.releaseYear || project.releaseYear === "TBA")
+      ? "TBA"
+      : project.releaseYear;
+  }
   if (heroImg) heroImg.src = project.coverImage || project.thumbnail;
 
   if (categoryBadge) {
@@ -698,6 +702,24 @@ function openProjectModal(projectId) {
         <span>View on Steam</span>
       `;
       actionsContainer.appendChild(steamBtn);
+    }
+
+    if (project.moreInfoUrl || project.id === "antrio") {
+      const moreInfoUrl = project.moreInfoUrl || "http://entytec.com/antrio/";
+      const infoBtn = document.createElement("a");
+      infoBtn.href = moreInfoUrl;
+      infoBtn.target = "_blank";
+      infoBtn.rel = "noopener noreferrer";
+      infoBtn.className = "btn btn-secondary";
+      infoBtn.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>More Information</span>
+      `;
+      actionsContainer.appendChild(infoBtn);
     }
   }
 
@@ -902,6 +924,18 @@ async function submitToBackendApi(payload, formElement) {
   }
 }
 
+function setFormFeedback(formElement, message, type = "success") {
+  if (!formElement) return;
+  let feedback = formElement.querySelector(".form-feedback-msg");
+  if (!feedback) {
+    feedback = document.createElement("div");
+    feedback.className = "form-feedback-msg";
+    formElement.appendChild(feedback);
+  }
+  feedback.textContent = message;
+  feedback.className = `form-feedback-msg ${type === "error" ? "feedback-error" : "feedback-success"}`;
+}
+
 function handleContactSubmit(event) {
   event.preventDefault();
   const form = event.target;
@@ -921,7 +955,9 @@ function handleContactSubmit(event) {
   const intent = intentInput ? intentInput.value : "Contact";
 
   if (!name || !email || !message) {
-    showToast("Please fill in all required fields.");
+    const errorMsg = "Please fill in all required fields.";
+    showToast(errorMsg, "error");
+    setFormFeedback(form, errorMsg, "error");
     return;
   }
 
@@ -937,12 +973,16 @@ function handleContactSubmit(event) {
     intent: intent
   }, form)
     .then(() => {
-      showToast("Thank you! Your message has been sent successfully. We'll get back to you soon.");
+      const successMsg = "Thank you! Your message has been sent successfully. We'll get back to you soon.";
+      showToast(successMsg, "success");
+      setFormFeedback(form, successMsg, "success");
       form.reset();
     })
     .catch((error) => {
       console.error("Contact Form Error:", error);
-      showToast(error.message || "Oops! Something went wrong. Please email us at info@entytec.com");
+      const errorMsg = error.message || "Oops! Something went wrong. Please email us at info@entytec.com";
+      showToast(errorMsg, "error");
+      setFormFeedback(form, errorMsg, "error");
     })
     .finally(() => {
       btn.disabled = false;
@@ -960,16 +1000,21 @@ function handlePlaytesterSubmit(event) {
   const platforms = checkedBoxes.map((cb) => cb.parentElement.textContent.trim()).join(", ") || "PC / Steam";
 
   closeModal("playtester-modal");
-  showToast(`Welcome to the Playtester team, ${name}! We've registered your interest.`);
 
   submitToBackendApi({
     type: "playtester",
     name: name,
     email: email,
     platforms: platforms
-  }, form).catch((err) => console.error("Playtester Submit Error:", err));
-
-  form.reset();
+  }, form)
+    .then(() => {
+      showToast(`Welcome to the Playtester team, ${name}! We've registered your interest.`, "success");
+      form.reset();
+    })
+    .catch((err) => {
+      console.error("Playtester Submit Error:", err);
+      showToast(err.message || "Oops! Something went wrong registering for playtesting.", "error");
+    });
 }
 
 function handleNewsletterSubmit(event, form) {
@@ -986,12 +1031,16 @@ function handleNewsletterSubmit(event, form) {
     email: emailVal
   }, form)
     .then(() => {
-      showToast("You have successfully subscribed to the Entytec newsletter!");
+      const successMsg = "You have successfully subscribed to the Entytec newsletter!";
+      showToast(successMsg, "success");
+      setFormFeedback(form, successMsg, "success");
       input.value = "";
     })
     .catch((error) => {
       console.error("Newsletter Submit Error:", error);
-      showToast(error.message || "Subscription failed. Please try again or email info@entytec.com");
+      const errorMsg = error.message || "Subscription failed. Please try again or email info@entytec.com";
+      showToast(errorMsg, "error");
+      setFormFeedback(form, errorMsg, "error");
     })
     .finally(() => {
       if (btn) btn.disabled = false;
@@ -1020,13 +1069,16 @@ function handleSubscribeSubmit(event) {
     email: emailVal
   }, form)
     .then(() => {
-      showToast("Thank you for subscribing! We'll notify you about upcoming playtests and releases.");
+      const successMsg = "Thank you for subscribing! We'll notify you about upcoming playtests and releases.";
+      showToast(successMsg, "success");
+      setFormFeedback(form, successMsg, "success");
       form.reset();
     })
     .catch((error) => {
       console.error("Subscribe Submit Error:", error);
-      showToast(error.message || "Thank you for subscribing! We'll notify you about upcoming playtests and releases.");
-      form.reset();
+      const errorMsg = error.message || "Subscription failed. Please try again or email info@entytec.com";
+      showToast(errorMsg, "error");
+      setFormFeedback(form, errorMsg, "error");
     })
     .finally(() => {
       if (btn) {
@@ -1037,17 +1089,40 @@ function handleSubscribeSubmit(event) {
 }
 
 /* ==========================================================================
-   08. TOAST NOTIFICATION ENGINE
+   08. TOAST NOTIFICATION ENGINE (Green on Success, Red on Error)
    ========================================================================== */
-function showToast(message, duration = 4000) {
+function showToast(message, typeOrDuration = "success", duration = 4000) {
+  let type = "success";
+  let dur = 4000;
+
+  if (typeof typeOrDuration === "number") {
+    dur = typeOrDuration;
+  } else if (typeof typeOrDuration === "string") {
+    type = typeOrDuration;
+    if (typeof duration === "number") dur = duration;
+  }
+
   const container = document.getElementById("toast-container");
   if (!container) return;
 
+  const isError = type === "error";
   const toast = document.createElement("div");
-  toast.className = "toast";
+  toast.className = `toast ${isError ? "toast-error" : "toast-success"}`;
+
+  const iconSvg = isError
+    ? `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2.5" style="flex-shrink:0;">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+       </svg>`
+    : `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5" style="flex-shrink:0;">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="9 12 12 15 16 10"/>
+       </svg>`;
+
   toast.innerHTML = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF5500" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
-    <span>${message}</span>
+    ${iconSvg}
+    <span class="toast-message">${message}</span>
   `;
 
   container.appendChild(toast);
@@ -1062,7 +1137,7 @@ function showToast(message, duration = 4000) {
     setTimeout(() => {
       toast.remove();
     }, 400);
-  }, duration);
+  }, dur);
 }
 
 

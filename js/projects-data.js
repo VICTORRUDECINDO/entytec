@@ -8,9 +8,10 @@ const ENT_PROJECTS = [
     tagline: "A fast-paced 2D action-platformer inspired by the golden era of 8-bit classics.",
     category: "Action / Platformer",
     platform: "PC · Steam",
-    status: "Available on Steam",
-    releaseYear: "2024",
+    status: "Coming Soon on Steam",
+    releaseYear: "TBA",
     engine: "Unity 3D",
+    moreInfoUrl: "http://entytec.com/antrio/",
     thumbnail: "Antrio/1.jpg",
     coverImage: "Antrio/2.jpg",
     gallery: [
@@ -58,28 +59,32 @@ const ENT_PROJECTS = [
     isMain: true
   },
   {
-    id: "alien-lab",
-    title: "Alien Lab",
-    tagline: "A sci-fi educational space adventure exploring human genetics, mutations, and cells.",
-    category: "Educational / Sci-Fi",
+    id: "thisisnteven",
+    title: "This Isn’t Even My Final Form",
+    tagline: "Collect video game hardware, build ridiculous setups, and see how far you can take it.",
+    category: "Idle / Clicker",
     platform: "Web · itch.io",
-    status: "Available on itch.io",
-    releaseYear: "2023",
+    status: "In Development / Prototype",
+    releaseYear: "TBA",
     engine: "Unity 3D",
-    thumbnail: "https://img.itch.zone/aW1nLzIxMTUxMjgzLnBuZw==/315x250%23c/8nat4a.png",
-    coverImage: "https://img.itch.zone/aW1nLzIxMTUxMjgzLnBuZw==/315x250%23c/8nat4a.png",
+    thumbnail: "https://img.itch.zone/aW1nLzMwMjA1MzYyLnBuZw==/original/CsogN1.png",
+    coverImage: "https://img.itch.zone/aW1nLzMwMjA1MzYyLnBuZw==/original/CsogN1.png",
     gallery: [
-      "https://img.itch.zone/aW1nLzIxMTUxMjgzLnBuZw==/315x250%23c/8nat4a.png"
+      "https://img.itch.zone/aW1hZ2UvNTA0NDA0Mi8zMDIwNzQ4OC5wbmc=/original/R5HE8K.png",
+      "https://img.itch.zone/aW1hZ2UvNTA0NDA0Mi8zMDIwNzQ4Ny5wbmc=/original/28%2F5S6.png",
+      "https://img.itch.zone/aW1hZ2UvNTA0NDA0Mi8zMDIwNzQ4OS5wbmc=/original/LxXJPf.png",
+      "https://img.itch.zone/aW1hZ2UvNTA0NDA0Mi8zMDIwNzUxMy5wbmc=/original/smYpb1.png",
+      "https://img.itch.zone/aW1hZ2UvNTA0NDA0Mi8zMDIwNzQ4Ni5wbmc=/original/6FvC6x.png"
     ],
-    description: "Join a curious young alien scientist aboard a cutting-edge orbital station to investigate the mysteries of human genetics, DNA synthesis, biological inheritance patterns, and cellular structures through interactive laboratory challenges.",
+    description: "This Isn't Even My Final Form is a small idle clicker about collecting video game consoles, accessories, peripherals, and other bits of gaming hardware. Start with a simple collection and gradually build it into increasingly ridiculous rigs. Collect hardware, generate resources, unlock new parts, and keep adding more things until it reaches its final form, or not.",
     features: [
-      "Hands-on laboratory puzzles and DNA synthesis mini-games",
-      "Stylized sci-fi aesthetic and engaging character animations",
-      "Developed in collaboration with educational gaming initiatives",
-      "Fully compatible across desktop and laptop web browsers"
+      "Collect video game consoles, accessories, and peripherals",
+      "Build increasingly ridiculous hardware setups and rigs",
+      "Generate resources and unlock rare hardware parts",
+      "Idle clicker progression playable directly in any browser"
     ],
-    demoUrl: "https://entytec.itch.io/alien-lab",
-    itchUrl: "https://entytec.itch.io/alien-lab",
+    demoUrl: "https://danielcf2996.itch.io/thisisnteven",
+    itchUrl: "https://danielcf2996.itch.io/thisisnteven",
     badgeColor: "amber",
     isMain: true
   },
